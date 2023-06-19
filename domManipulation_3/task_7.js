@@ -1,0 +1,16 @@
+var items = document.querySelector(".list-group");
+// console.log(items.parentElement);
+// console.log(items.parentElement.parentElement);
+// console.log(items.lastElementChild);
+// console.log(items.lastChild);
+// console.log(items.firstElementChild);
+// console.log(items.firstChild);
+// console.log(items.nextElementSibling);
+// console.log(items.nextSibling);
+// console.log(items.previousElementSibling);
+// console.log(items.previousSibling);
+var newElement = document.createElement("h1");
+newElement.appendChild(document.createTextNode("Hello World"));
+var parent = document.querySelector(".container");
+var sibling = document.querySelector(".container #header-title");
+parent.insertBefore(newElement,sibling);
