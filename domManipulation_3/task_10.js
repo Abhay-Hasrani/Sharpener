@@ -13,17 +13,28 @@ form.addEventListener("submit",(e)=>{
         email : emailText.value
     };
     // localStorage.setItem("myobj",JSON.stringify(myobj));
+
     // task 12 instead of above for scalable database we will use key as email
     //also we will display the key value
     localStorage.setItem(emailText.value,JSON.stringify(myobj));
+    console.log("added object"); 
+
     var displayText = `${emailText.value} - ${JSON.stringify(myobj)}`;
     var br  = document.createElement("br");
     var list = document.getElementById("users");
-    list.appendChild(
-        document.createElement("h4").
-    appendChild(document.createTextNode(displayText))
-    );
-    list.appendChild(br);
+    var listElement = document.createElement("li");
+    listElement.appendChild(document.createTextNode(displayText));
+    list.appendChild(listElement);
+    
+    // task 13 adding delete functionality
+    var input = document.createElement("input");
+    input.type = "button";
+    input.value = "delete";
+    listElement.appendChild(input);
+    input.addEventListener("click",(e)=>{
+            listElement.remove();
+            console.log("deleted");
+    });
 
-    console.log("added object");  
+    list.appendChild(br);
 });
