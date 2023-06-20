@@ -13,5 +13,5 @@ form.addEventListener("submit",(e)=>{
         email : emailText.value
     };
     localStorage.setItem("myobj",JSON.stringify(myobj));
-    console.log("added"); 
+    console.log("added object");  
 });
