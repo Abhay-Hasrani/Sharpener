@@ -33,8 +33,25 @@ form.addEventListener("submit",(e)=>{
     listElement.appendChild(input);
     input.addEventListener("click",(e)=>{
             listElement.remove();
+            var key = listElement.textContent.split(" - ")[0];
+            localStorage.removeItem(key);
             console.log("deleted");
     });
 
     list.appendChild(br);
+
+    //task 14 edit functionality
+    var edit = document.createElement("input");
+    edit.type = "button";
+    edit.value = "edit";
+    listElement.appendChild(edit);
+    edit.addEventListener("click",(e)=>{
+        listElement.remove();
+        var key = listElement.textContent.split(" - ")[0];
+        var object = JSON.parse(localStorage.getItem(key));
+        localStorage.removeItem(key);
+        nameText.value = object.name;
+        emailText.value = object.email;
+        console.log("editing");
+});
 });
