@@ -7,7 +7,9 @@ form.addEventListener("submit",(e) =>{
     // console.log("1");
     var newListItem = document.createElement("li");
     var itemValue = document.querySelector("#item");
+    var descValue = document.querySelector("#description");
     newListItem.appendChild(document.createTextNode(itemValue.value));
+    newListItem.appendChild(document.createTextNode(" "+descValue.value));
 
     //as new list element should have same bs styling
     newListItem.className = itemList.children[0].className;
@@ -39,4 +41,19 @@ itemList.addEventListener("click",(e)=>{
         }
     }
 
+});
+
+
+//adding filter functionality task 9
+var filter  = document.getElementById("filter");
+filter.addEventListener("keyup",(e)=>{
+    var itemText = e.target.value.toLowerCase();
+    // console.log(itemText);
+    var listItems = document.getElementsByTagName("li");
+    Array.from(listItems).forEach((item)=>{
+        if(item.firstChild.textContent.toLowerCase().indexOf(itemText) != -1 ||
+        item.firstChild.nextSibling.textContent.toLowerCase().indexOf(itemText) != -1){
+            item.style.display = "block";
+        }else item.style.display = "none";
+    });
 });
