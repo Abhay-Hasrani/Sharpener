@@ -12,6 +12,18 @@ form.addEventListener("submit",(e)=>{
         name : nameText.value,
         email : emailText.value
     };
-    localStorage.setItem("myobj",JSON.stringify(myobj));
+    // localStorage.setItem("myobj",JSON.stringify(myobj));
+    // task 12 instead of above for scalable database we will use key as email
+    //also we will display the key value
+    localStorage.setItem(emailText.value,JSON.stringify(myobj));
+    var displayText = `${emailText.value} - ${JSON.stringify(myobj)}`;
+    var br  = document.createElement("br");
+    var list = document.getElementById("users");
+    list.appendChild(
+        document.createElement("h4").
+    appendChild(document.createTextNode(displayText))
+    );
+    list.appendChild(br);
+
     console.log("added object");  
 });
