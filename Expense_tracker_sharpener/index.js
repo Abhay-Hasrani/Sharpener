@@ -22,7 +22,7 @@ myForm.addEventListener("submit",(e)=>{
         activity : activity.value,
         category : dropdown.textContent
     }
-    let str = `${amount.value} - ${activity.value} - ${dropdown.textContent}`;
+    let str = `${amount.value}₹ - ${activity.value} - ${dropdown.textContent}`;
     //cloning and creating new list element from hidden template i created in html
     var listItem = document.getElementById("mylist-item").cloneNode(true);
     listItem.style.display='';
