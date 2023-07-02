@@ -1,3 +1,9 @@
+var nameText = document.getElementById("name");
+var emailText = document.getElementById("email");
+var id=0;
+var form = document.getElementById("my-form");
+
+
 window.addEventListener("DOMContentLoaded",(e)=>{
     axios.get('https://crudcrud.com/api/f0a4b50eb9664eea90a2411075a3fb45/users').then(res=>{
         console.log(res)
@@ -12,15 +18,13 @@ window.addEventListener("DOMContentLoaded",(e)=>{
 });
 //above code is for persisting data even after refreshing
 
-var nameText = document.getElementById("name");
-var emailText = document.getElementById("email");
-var id=0;
-var form = document.getElementById("my-form");
+
+var editing = false;
 form.addEventListener("submit",(e)=>{
     e.preventDefault();
+    if(editing===true) createListElement("editing");
     createListElement("submit");
 });
-
 function createListElement(flag){
     // localStorage.setItem("name",nameText.value);
     // localStorage.setItem("email",emailText.value);
@@ -45,15 +49,27 @@ function createListElement(flag){
 
 
     //using post method to put dataon its server using axios
-    if(flag==="submit")
+    if(flag==="submit"){
+        if(nameText.value==="" || emailText.value==="") return;
     axios.post('https://crudcrud.com/api/f0a4b50eb9664eea90a2411075a3fb45/users',{
         name : nameText.value,
         email : emailText.value
     }).then(res => {
         console.log("posted");
-        console.log(res)
-        id = res.data._id;
+        console.log(res);
     });
+    }else if(flag==="editing"){
+        console.log("started edit for id: "+id);
+        axios.put('https://crudcrud.com/api/f0a4b50eb9664eea90a2411075a3fb45/users/'+id,{
+        name : nameText.value,
+        email : emailText.value
+    }).then(res => {
+        console.log("updated");
+        console.log(res);
+        editing=false;
+    });
+
+    }
 
     var displayText = `${emailText.value} - ${nameText.value} - ${id}`;
     var br  = document.createElement("br");
@@ -90,7 +106,7 @@ function createListElement(flag){
     edit.addEventListener("click",(e)=>{
         listElement.remove();
 
-        // var key = listElement.textContent.split(" - ")[0];
+        id = listElement.textContent.split(" - ")[2];
         // var object = JSON.parse(localStorage.getItem(key));
         // localStorage.removeItem(key);
 
@@ -103,11 +119,9 @@ function createListElement(flag){
         // console.log(res);
         nameText.value = res.data.name;
         emailText.value = res.data.email;
-        axios.delete('https://crudcrud.com/api/f0a4b50eb9664eea90a2411075a3fb45/users/' +id);
-        console.log("started edit");
+        editing=true;
     });
         
-        console.log("editing");
 });
 nameText.value = "";
 emailText.value = "";
