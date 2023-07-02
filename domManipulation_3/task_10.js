@@ -1,12 +1,14 @@
-axios.get('https://crudcrud.com/api/f0a4b50eb9664eea90a2411075a3fb45/users').then(res=>{
-    console.log(res)
-    Object.values(res.data).forEach(element => {
-        console.log(element);
-        nameText.value = element.name;
-        emailText.value = element.email;
-        id=element._id;
-        createListElement();
-    });
+window.addEventListener("DOMContentLoaded",(e)=>{
+    axios.get('https://crudcrud.com/api/f0a4b50eb9664eea90a2411075a3fb45/users').then(res=>{
+        console.log(res)
+        Object.values(res.data).forEach(element => {
+            console.log(element);
+            nameText.value = element.name;
+            emailText.value = element.email;
+            id=element._id;
+            createListElement();
+        });
+    });    
 });
 //above code is for persisting data even after refreshing
 
