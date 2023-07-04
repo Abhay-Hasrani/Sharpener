@@ -1,6 +1,6 @@
 // import axios from "axios";
 
-var baseUrl = "https://crudcrud.com/api/1425b487b37943ee88a98787c540cf1a/stockItems";
+var baseUrl = "https://crudcrud.com/api/0480798f3db3480fa52af526609c6e4d/stockItems";
 var candyName = document.getElementById("candy-name");
 var description = document.getElementById("candy-description");
 var price = document.getElementById("candy-price");
@@ -10,15 +10,13 @@ var myform = document.getElementById("my-form");
 
 //adding functionality for data persistence after refresh
 window.addEventListener("DOMContentLoaded",(e)=>{
-    axios.get(baseUrl).then(myjson =>
-    Object.values(myjson.data).forEach(element => {
-        addListItem(element,element._id);
-        // console.log(element+" -id =  "+element._id);
-    })
-    );
+    refreshList();
 });
 
 function refreshList(){
+    while (list.firstChild) {
+        list.removeChild(list.firstChild);
+      }
     axios.get(baseUrl).then(myjson =>
         Object.values(myjson.data).forEach(element => {
             addListItem(element,element._id);
@@ -41,49 +39,34 @@ function addListItem(obj,id,action){
     let buy3Btn = buy1Btn.cloneNode(false);
     buy3Btn.textContent = "Buy 3"
 
+    let delBtn = document.createElement("button");
+    delBtn.classList = "btn-close btn-danger"
+
     buy1Btn.addEventListener("click",(e)=>{
         console.log("btn 1 clicked");
-    axios.put(baseUrl+"/"+id,{
-        name : obj.name,
-        description : obj.description,
-        price : obj.price,
-        quantity : obj.quantity-1
-    }).then(obj=>{
-        addListItem(obj.data,id);
-        console.log((baseUrl+"/"+id));
-    });
-
-
+        updateQuantity(id,obj,1,e);
     });
     buy2Btn.addEventListener("click",(e)=>{
         console.log("btn 2 clicked");
-        axios.put(baseUrl+"/"+id,{
-            name : obj.name,
-            description : obj.description,
-            price : obj.price,
-            quantity : obj.quantity-2
-        }).then(obj=>{
-            addListItem(obj.data,id);
-            console.log((baseUrl+"/"+id));
-        });
+        updateQuantity(id,obj,2);
     });
     buy3Btn.addEventListener("click",(e)=>{
         console.log("btn 3 clicked");
-        axios.put(baseUrl+"/"+id,{
-            name : obj.name,
-            description : obj.description,
-            price : obj.price,
-            quantity : obj.quantity-3
-        }).then(obj=>{
-            addListItem(obj.data,id);
-            console.log((baseUrl+"/"+id));
+        updateQuantity(id,obj,3);
+    });
+    delBtn.addEventListener("click",(e)=>{
+        axios.delete(baseUrl+"/"+id).then(mas=>{
+            console.log("deleted"+mas);
+            refreshList();
         });
+        
     });
 
     listItem.appendChild(text);
     listItem.appendChild(buy1Btn);
     listItem.appendChild(buy2Btn);
     listItem.appendChild(buy3Btn);
+    listItem.appendChild(delBtn);
     list.prepend(listItem);
 }
 
@@ -104,7 +87,16 @@ myform.addEventListener("submit",(e)=>{
     }).catch(err=>console.log("error :" + err));
 });
 
-function updateQuantity(id,obj,num){
-    
+function updateQuantity(id,obj,num,e){
+    axios.put(baseUrl+"/"+id,{
+        name : obj.name,
+        description : obj.description,
+        price : obj.price,
+        quantity : obj.quantity-num
+    }).then(obj=>{
+        console.log(("updated"));
+        addListItem(obj.data,id);
+        refreshList();
+    });
 }
 
