@@ -1,6 +1,6 @@
 // import axios from "axios";
 
-var baseUrl = "https://crudcrud.com/api/0480798f3db3480fa52af526609c6e4d/stockItems";
+var baseUrl = "https://crudcrud.com/api/faceff872529477da42d329002dd6f4c/stockItems";
 var candyName = document.getElementById("candy-name");
 var description = document.getElementById("candy-description");
 var price = document.getElementById("candy-price");
@@ -17,14 +17,20 @@ function refreshList(){
     while (list.firstChild) {
         list.removeChild(list.firstChild);
       }
-    axios.get(baseUrl).then(myjson =>
-        Object.values(myjson.data).forEach(element => {
-            addListItem(element,element._id);
-            // console.log(element+" -id =  "+element._id);
-        }));
+    async function my_get(){
+        try {
+            const myjson =await getData(baseUrl);
+                   Object.values(myjson.data).forEach(element => {
+            addListItem(element,element._id)});
+        } catch (err) {
+            console.log("error :" + err)
+        }
+    }
+    my_get();
+  
 }
 
-function addListItem(obj,id,action){
+function addListItem(obj,id){
     console.log(obj);
     let listItem = document.createElement("li");
     listItem.classList = "";
@@ -44,7 +50,7 @@ function addListItem(obj,id,action){
 
     buy1Btn.addEventListener("click",(e)=>{
         console.log("btn 1 clicked");
-        updateQuantity(id,obj,1,e);
+        updateQuantity(id,obj,1);
     });
     buy2Btn.addEventListener("click",(e)=>{
         console.log("btn 2 clicked");
@@ -55,10 +61,15 @@ function addListItem(obj,id,action){
         updateQuantity(id,obj,3);
     });
     delBtn.addEventListener("click",(e)=>{
-        axios.delete(baseUrl+"/"+id).then(mas=>{
-            console.log("deleted"+mas);
-            refreshList();
-        });
+        async function my_delete(baseUrl,id){
+            try {
+                await deleteData(baseUrl,id);
+                refreshList();
+            } catch (err) {
+                console.log("error :" + err)
+            }
+        }
+        my_delete(baseUrl,id);
         
     });
 
@@ -78,25 +89,48 @@ myform.addEventListener("submit",(e)=>{
         price : price.value,
         quantity : quantity.value
     }
-    //console.log("here");
     
     console.log("adding");
-    axios.post(baseUrl,obj).then(msg=>{
-        console.log("added "+JSON.stringify(msg.data));
-        addListItem(msg.data,msg.data._id);
-    }).catch(err=>console.log("error :" + err));
+    async function add(){
+        try {
+            const msg = await putData(baseUrl,obj);
+            addListItem(msg.data,msg.data._id);
+        } catch (err) {
+            console.log("error :" + err)
+        }
+    }
+    add();
 });
 
-function updateQuantity(id,obj,num,e){
-    axios.put(baseUrl+"/"+id,{
-        name : obj.name,
-        description : obj.description,
-        price : obj.price,
-        quantity : obj.quantity-num
-    }).then(obj=>{
-        console.log(("updated"));
-        addListItem(obj.data,id);
-        refreshList();
-    });
+function updateQuantity(id,obj,num){
+    console.log(typeof(obj)+" : "+JSON.stringify(obj));
+    async function my_update(){
+        try {
+            const prom = await updateData(id,obj,num);
+            console.log(("updated"));
+            addListItem(prom.data,id);
+            refreshList();
+        } catch (error) {
+            console.log("error :" + error)
+        }
+    }
+    my_update();
 }
 
+
+async function putData(baseUrl,obj){
+    return await axios.post(baseUrl,obj);
+}
+async function deleteData(baseUrl,id){
+    return await axios.delete(baseUrl+"/"+id);
+}
+async function getData(baseUrl){
+    return await axios.get(baseUrl);
+}
+async function updateData(id,obj,num){
+    return axios.put(baseUrl+"/"+id,{
+        name : obj.name,
+        description : obj.deriscption,
+        price : obj.price,
+        quantity : obj.quantity-num});
+}
