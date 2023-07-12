@@ -1,5 +1,5 @@
 import "./ExpenseItem.css"
-function ExpenseDetails(props) {
+const ExpenseDetails=(props)=> {
   return (
     <div style={{width : "100%",padding : 10}}>
       <div> : {props.location}</div>
