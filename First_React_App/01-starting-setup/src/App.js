@@ -28,7 +28,7 @@ function App() {
   const expenseList = [];
   for(let i=0;i<expenses.length;i++){
     expenseList.push(
-    <ExpenseItem location ={expenses[i].location} title={expenses[i].title} date={expenses[i].date} amount={expenses[i].amount}></ExpenseItem>
+    <ExpenseItem id= {expenses[i].id} location ={expenses[i].location} title={expenses[i].title} date={expenses[i].date} amount={expenses[i].amount}></ExpenseItem>
     );
   }
   return (
