@@ -23,8 +23,16 @@ const ExpenseForm = () => {
     }
   }
 
+  function submitHandler(e){
+    e.preventDefault();
+    const expenseObj = {title : enteredTitle,
+        amount : enteredAmount,
+        date : new Date(enteredDate)
+    }
+    console.log(expenseObj);
+  }
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <label>Expense Description: </label>
       <input onChange={changeHandler} type="text" id="title" />
       <br />
@@ -33,6 +41,8 @@ const ExpenseForm = () => {
       <br />
       <label>Expense Date: </label>
       <input onChange={changeHandler} type="date" id="date" />
+      <br />
+      <input type="submit" value="Add Expense" id="submit" />
     </form>
   );
 };
