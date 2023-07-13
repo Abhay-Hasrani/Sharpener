@@ -1,24 +1,24 @@
 import { useState } from "react";
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   const [enteredTitle, setTitle] = useState("");
   const [enteredAmount, setAmount] = useState("");
   const [enteredDate, setDate] = useState("");
   function changeHandler(e) {
     const id = e.target.id;
-    console.log(id);
+    // console.log(id);
     switch (id) {
       case "title":
         setTitle(e.target.value);
-        console.log("title Updated");
+        // console.log("title Updated");
         break;
       case "amount":
         setAmount(e.target.value);
-        console.log("am0unt Updated");
+        // console.log("am0unt Updated");
         break;
       case "date":
         setDate(e.target.value);
-        console.log("date Updated");
+        // console.log("date Updated");
         break;
     }
   }
@@ -29,7 +29,8 @@ const ExpenseForm = () => {
         amount : enteredAmount,
         date : new Date(enteredDate)
     }
-    console.log(expenseObj);
+    // console.log(expenseObj);
+    props.onAddExpenseHandler(expenseObj);
   }
   return (
     <form onSubmit={submitHandler}>

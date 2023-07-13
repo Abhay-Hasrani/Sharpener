@@ -4,6 +4,8 @@ import ExpenseDetails from "./ExpenseDetails";
 import { useState } from "react";
 
 const ExpenseItem=(props)=>{
+   // console.log("called expense item");
+
     const [amount,setAmount] = useState(props.amount);
     const clickHandler=(e)=>{
         // const ele = document.getElementById(props.id);
