@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./ExpenseForm.css"
+import "./ExpenseForm.css";
 const ExpenseForm = (props) => {
   const [enteredTitle, setTitle] = useState("");
   const [enteredAmount, setAmount] = useState("");
@@ -32,11 +32,26 @@ const ExpenseForm = (props) => {
     };
     // console.log(expenseObj);
     props.onAddExpenseHandler(expenseObj);
+    setFormVisibility(false);
+  }
+
+function newExpenseButtonClickHandler(e){
+   setFormVisibility(true);
+}
+function cancelClickHandler(e){
+  setFormVisibility(false);
+}
+
+  const [formVisibility,setFormVisibility] = useState(false);
+  const newExpenseButton = <button onClick={newExpenseButtonClickHandler}>Add New Expense</button>;
+
+  if (formVisibility === false) {
+    return <div className="new-expense__control">{newExpenseButton}</div>;
   }
   return (
     <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
-        <div className='new-expense__control'>
+        <div className="new-expense__control">
           <label>Expense Description: </label>
           <input onChange={changeHandler} type="text" id="title" />
         </div>
@@ -50,6 +65,9 @@ const ExpenseForm = (props) => {
         </div>
         <div className="new-expense__control">
           <input type="submit" value="Add Expense" id="submit" />
+        </div>
+        <div className="new-expense__control">
+          <button onClick={cancelClickHandler}>Cancel</button>
         </div>
       </div>
     </form>
