@@ -2,6 +2,8 @@ import ExpenseItem from "./components/Expenses/ExpenseItem";
 import ExpenseForm from "./components/Expenses/ExpenseForm";
 import ExpenseFilter from "./components/Expenses/ExpenseFilter";
 import { useState } from "react";
+import ExpensesChart from "./components/Expenses/ExpensesChart";
+
 const DUMMY_EXPENSES = [
   {
     id: "e1",
@@ -70,12 +72,13 @@ function App() {
   }
 
   return (
-    <div>
+    <div style={{margin : "50px"}}>
       <ExpenseForm onAddExpenseHandler={OnAddExpense}  />
       <ExpenseFilter
         selected={filteredYear}
         onChangeFilter={filteredChangehandler}
       ></ExpenseFilter>
+      <ExpensesChart expenses={filteredExpenses} />
       {expenseListContent}
       {(filteredExpenses.length === 1)?(<p style={{color : 'white',margin :"1rem"}}>Only single Expense here. Please add more...</p>):""}
     </div>
