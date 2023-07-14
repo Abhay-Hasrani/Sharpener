@@ -56,7 +56,11 @@ function App() {
       <ExpenseForm onAddExpenseHandler={OnAddExpense} />
       <ExpenseFilter selected = {filteredYear} onChangeFilter={filteredChangehandler}></ExpenseFilter>
       {
-       expenseListState.map((expense)=>(
+       expenseListState
+       .filter(expense=>{
+        return expense.date.getFullYear()==filteredYear;
+       })
+       .map((expense)=>(
         <ExpenseItem
             key={expense.id}
             id={expense.id}
