@@ -1,5 +1,6 @@
 import ExpenseItem from "./components/Expenses/ExpenseItem";
 import ExpenseForm from "./components/Expenses/ExpenseForm";
+import ExpenseFilter from "./components/Expenses/ExpenseFilter";
 import { useState } from "react";
 function App() {
   console.log("called");
@@ -48,6 +49,11 @@ function App() {
   }
 
   const [expenseListState, setExpenseList] = useState(expenseList);
+  const [filteredYear, setFilterYear] = useState('2023');
+
+  function filteredChangehandler(selectedYear){
+    setFilterYear(selectedYear);
+  }
 
   function OnAddExpense(expenseObj) {
     console.log(expenseObj);
@@ -60,16 +66,13 @@ function App() {
         amount={expenseObj.amount}
       ></ExpenseItem>
     );
-    //console.log(expenseList);
     setExpenseList([...expenseList]); //note always use new object dont pass old state object
   }
-  let arr = [100, 200, 200];
-  // console.log(expenseList);
-  // console.log("expenseListState", [...expenseListState]);
+
   return (
     <div>
-      <h2>Let's get started!!</h2>
       <ExpenseForm onAddExpenseHandler={OnAddExpense} />
+      <ExpenseFilter selected = {filteredYear} onChangeFilter={filteredChangehandler}></ExpenseFilter>
       {expenseListState};
     </div>
   );

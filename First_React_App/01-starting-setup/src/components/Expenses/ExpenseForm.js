@@ -23,27 +23,35 @@ const ExpenseForm = (props) => {
     }
   }
 
-  function submitHandler(e){
+  function submitHandler(e) {
     e.preventDefault();
-    const expenseObj = {title : enteredTitle,
-        amount : enteredAmount,
-        date : new Date(enteredDate)
-    }
+    const expenseObj = {
+      title: enteredTitle,
+      amount: enteredAmount,
+      date: new Date(enteredDate),
+    };
     // console.log(expenseObj);
     props.onAddExpenseHandler(expenseObj);
   }
   return (
     <form onSubmit={submitHandler}>
-      <label>Expense Description: </label>
-      <input onChange={changeHandler} type="text" id="title" />
-      <br />
-      <label>Expense Amount: </label>
-      <input onChange={changeHandler} type="number" id="amount" />
-      <br />
-      <label>Expense Date: </label>
-      <input onChange={changeHandler} type="date" id="date" />
-      <br />
-      <input type="submit" value="Add Expense" id="submit" />
+      <div className="new-expense__controls">
+        <div className='new-expense__control'>
+          <label>Expense Description: </label>
+          <input onChange={changeHandler} type="text" id="title" />
+        </div>
+        <div className="new-expense__control">
+          <label>Expense Amount: </label>
+          <input onChange={changeHandler} type="number" id="amount" />
+        </div>
+        <div className="new-expense__control">
+          <label>Expense Date: </label>
+          <input onChange={changeHandler} type="date" id="date" />
+        </div>
+        <div className="new-expense__control">
+          <input type="submit" value="Add Expense" id="submit" />
+        </div>
+      </div>
     </form>
   );
 };
