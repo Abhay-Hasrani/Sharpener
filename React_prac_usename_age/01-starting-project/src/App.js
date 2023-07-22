@@ -9,10 +9,11 @@ function App() {
       });
   }
   return (
-    <div >
+    //use empty tag or <React.Fragment> both are same;
+    <>
       <MyForm userData = {formdatahandler} />
       {MyUserList}
-    </div>
+    </>
   );
 }
 
