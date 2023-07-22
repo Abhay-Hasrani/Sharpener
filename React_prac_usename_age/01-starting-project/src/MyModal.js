@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./MyModal.css";
 const MyModal = (props) => {
   return (props.isOpen &&
-    <div className="modal-overlay">
+    <div className="modal-overlay" onClick={props.closeModal}>
     <div className="modal">
       <div className="modal-content">
         <h1>Invalid input</h1>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MyModal from "./MyModal";
 import "./MyForm.css";
+import Card from "./Card";
 const MyForm = (props) => {
   const [hint, setHint] = useState("");
   const [isModalOpen, setIsOpenModal] = useState(false);
@@ -17,14 +18,16 @@ const MyForm = (props) => {
       setIsOpenModal(true);
     } else {
       props.userData(Math.random(), userName, userAge);
+      e.target[0].value='';
+      e.target[1].value='';
       // console.log(Math.random(), e.target[0].value, e.target[1].value);
     }
   }
   function closeModal() {
     setIsOpenModal(false);
   }
-  return (
-    <div className="my-form-parent">
+  return (<Card>
+    
       <MyModal
         hintMessage={hint}
         isOpen={isModalOpen}
@@ -35,9 +38,10 @@ const MyForm = (props) => {
         <input type="text" />
         <label>Age (Years)</label>
         <input type="number" />
-        <input type="submit" value="Add User" />
+        <button type="submit">Add User</button>
       </form>
-    </div>
+    
+    </Card>
   );
 };
 
