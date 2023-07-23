@@ -3,9 +3,9 @@ import MyForm from './MyForm';
 import './index.css';
 function App() {
   const [MyUserList,UpdateMyList] = useState([]);
-  function formdatahandler(userId,userName,userAge){
+  function formdatahandler(userId,userName,userAge,collegeName){
       UpdateMyList((previousList)=>{
-        return [<div className="listItem" key={userId}>{userName} ({userAge} years old)</div>,...previousList];
+        return [<div className="listItem" key={userId}>{userName} ({userAge} years old) - {collegeName}</div>,...previousList];
       });
   }
   return (
