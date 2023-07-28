@@ -8,7 +8,21 @@ const CartProvider = (props) => {
     totalAmount: 0,
     addItem: addItemHandler,
     removeItem: removeItemHandler,
+    updateItemQuantity: updateItemQuantityHandler,
   });
+
+  function updateItemQuantityHandler(id, amount) {
+    updateCartContext((prev) => {
+      const index = prev.items.findIndex((mItem) => mItem.id === id);
+      if(prev.items[index].quantity===1 && amount<0){
+        removeItemHandler(id,index);
+      }
+      prev.items[index].quantity += amount;
+      prev.totalItems += amount;
+      prev.totalAmount += amount * prev.items[index].price;
+      return { ...prev };
+    });
+  }
 
   function addItemHandler(item) {
     const id = item.id;
@@ -25,9 +39,13 @@ const CartProvider = (props) => {
     });
   }
 
-  function removeItemHandler(id) {
+  function removeItemHandler(id,index=-1) {
     updateCartContext((prev) => {
-      const index = prev.items.findIndex((mItem) => mItem.id === id);
+      if(index===-1) index = prev.items.findIndex((mItem) => mItem.id === id);
+      else {
+        prev.items.splice(index,1);
+        return { ...prev };  
+      }
       if (index === -1) {
         alert("item is not present");
         return;
