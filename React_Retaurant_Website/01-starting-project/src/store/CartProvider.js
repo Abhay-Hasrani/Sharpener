@@ -7,19 +7,22 @@ const CartProvider = (props) => {
     totalItems: 0,
     totalAmount: 0,
     addItem: addItemHandler,
-    removeItem: removeItemHandler,
+    //removeItem: removeItemHandler,
     updateItemQuantity: updateItemQuantityHandler,
   });
 
   function updateItemQuantityHandler(id, amount) {
     updateCartContext((prev) => {
       const index = prev.items.findIndex((mItem) => mItem.id === id);
-      if(prev.items[index].quantity===1 && amount<0){
-        removeItemHandler(id,index);
-      }
-      prev.items[index].quantity += amount;
       prev.totalItems += amount;
       prev.totalAmount += amount * prev.items[index].price;
+      if (prev.totalAmount < 0) prev.totalAmount = 0;
+      if (prev.totalItems < 0) prev.totalItems = 0;
+      if (prev.items[index].quantity === 1 && amount < 0) {
+        prev.items.splice(index, 1);
+        return { ...prev };
+      }
+      prev.items[index].quantity += amount;
       return { ...prev };
     });
   }
@@ -39,24 +42,24 @@ const CartProvider = (props) => {
     });
   }
 
-  function removeItemHandler(id,index=-1) {
-    updateCartContext((prev) => {
-      if(index===-1) index = prev.items.findIndex((mItem) => mItem.id === id);
-      else {
-        prev.items.splice(index,1);
-        return { ...prev };  
-      }
-      if (index === -1) {
-        alert("item is not present");
-        return;
-      }
-      const item = prev.items[index];
-      prev.totalItems += item.quantity;
-      prev.totalAmount -= item.quantity * item.price;
-      prev.items.splice(index,1);
-      return { ...prev };
-    });
-  }
+  // function removeItemHandler(id,index=-1) {
+  //   updateCartContext((prev) => {
+  //     if(index===-1) index = prev.items.findIndex((mItem) => mItem.id === id);
+  //     else {
+  //       prev.items = prev.items.splice(index,1);
+  //       return { ...prev };
+  //     }
+  //     if (index === -1) {
+  //       alert("item is not present");
+  //       return { ...prev };
+  //     }
+  //     const item = prev.items[index];
+  //     prev.totalItems += item.quantity;
+  //     prev.totalAmount -= item.quantity * item.price;
+  //     prev.items = prev.items.splice(index,1);
+  //     return { ...prev };
+  //   });
+  // }
 
   return (
     <CartContext.Provider value={cartContext}>
