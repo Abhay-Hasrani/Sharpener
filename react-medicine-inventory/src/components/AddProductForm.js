@@ -24,9 +24,9 @@ const AddProductForm = () => {
       <label htmlFor="medicine_description">Description:</label>
       <input type="text" id="medicine_description" />
       <label htmlFor="medicine_price"> Price:</label>
-      <input type="number" id="medicine_price" min={0} />
+      <input type="number" id="medicine_price" min={1} />
       <label htmlFor="medicine_quantity">Quantity:</label>
-      <input type="number" id="medicine_quantity" min={0} />
+      <input type="number" id="medicine_quantity" min={1} />
       <button type="submit">Add Product</button>
     </form>
   );

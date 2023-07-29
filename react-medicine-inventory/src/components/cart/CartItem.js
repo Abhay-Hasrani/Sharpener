@@ -1,12 +1,21 @@
 import { useContext } from "react";
 import CartContext from "../../store/cart-context";
+import MedicineContext from "../../store/medicine-context";
 
 const CartItem = (props) => {
   const cartCtx = useContext(CartContext);
+  const medicineCtx = useContext(MedicineContext);
+
   function onPlusClickHandler(e) {
-    cartCtx.updateCartItemQuantity(props.item.id, 1);
+    if (medicineCtx.isInStock(props.item.id)) {
+      cartCtx.updateCartItemQuantity(props.item.id, 1);
+      medicineCtx.updateMedicineQuantity(props.item.id, -1);
+    } else {
+      console.log("out of stock");
+    }
   }
   function onMinusClickHandler(e) {
+    medicineCtx.updateMedicineQuantity(props.item.id, +1);
     cartCtx.updateCartItemQuantity(props.item.id, -1);
   }
   return (
