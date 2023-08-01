@@ -1,0 +1,27 @@
+.footer {
+  background-color: black;
+  color: white;
+  justify-content: center;
+  padding: 1rem;
+  border-top: 0.5rem solid wheat;
+}
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+}
+.contact-info {
+  margin: 0.5rem 0;
+}
+.social-media-info a {
+  margin: 0 1rem 0 1rem;
+}
+.social-media-info a img {
+  height: 50px;
+  width: 50px;
+  border: 2px solid #ccc;
+  object-fit: cover;
+}
+.footer-title{
+    font-size: 50px;
+    color: wheat;
+}

@@ -1,0 +1,12 @@
+.product{
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    margin: 25px;
+    background-color: black;
+}
+.product div{
+    color: white;
+    font-weight: bolder;
+    font-size: larger;
+}

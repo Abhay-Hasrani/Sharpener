@@ -1,0 +1,15 @@
+.navbar .brand {
+  color: wheat;
+}
+.navbar {
+  border-bottom: 0.3rem solid wheat;
+}
+.navbar .brand:hover {
+  color: wheat;
+}
+.navbar .navs a {
+  color: white;
+}
+.navbar .navs a:hover {
+  color: wheat;
+}

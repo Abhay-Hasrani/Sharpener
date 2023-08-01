@@ -1,0 +1,15 @@
+.section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 75px;
+}
+.section .title{
+    font-weight: bolder;
+    font-size: 30px;
+}
+.section .productList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
