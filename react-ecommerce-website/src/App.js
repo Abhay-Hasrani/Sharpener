@@ -5,6 +5,7 @@ import Footer from './components/footer/Footer';
 // import Header from './components/header_with_css/Header';
 import Header from './components/header/Header';
 import CartModal from './components/Modal/CartModal';
+import CartProvider from './store/CartProvider';
 
 function App() {
   const [cartVisibility,setCartVisibility] = useState(false);
@@ -15,14 +16,14 @@ function App() {
     setCartVisibility(false);
   }
   return (
-    <div className='app'>
+    <CartProvider className='app'>
       <CartModal hideCart={hideCart} cartVisibility={cartVisibility}/>
     <Header showCart={showCart}/>
     <div className='main-content'>
       <Section title="Sale Items"/>
       </div>
     <Footer/>
-    </div>
+    </CartProvider>
   );
 }
 

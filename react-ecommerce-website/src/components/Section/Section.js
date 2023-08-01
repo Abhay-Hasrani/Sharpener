@@ -36,7 +36,7 @@ const productsArr = [
 const Section = (props) => {
   const productList = productsArr.map((item) => {
     return (
-      <Product title={item.title} price={item.price} imageUrl={item.imageUrl} />
+      <Product key={item.imageUrl} title={item.title} price={item.price} imageUrl={item.imageUrl} />
     );
   });
   return (

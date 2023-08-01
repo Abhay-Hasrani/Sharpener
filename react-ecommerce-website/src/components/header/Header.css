@@ -13,3 +13,9 @@
 .navbar .navs a:hover {
   color: wheat;
 }
+.navbar .btn .cart-item-count{
+  margin: 3px;
+  color: cyan;
+  font-weight: bolder;
+  font-size: 15px;
+}

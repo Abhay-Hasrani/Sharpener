@@ -1,40 +1,43 @@
 import { Button, Modal } from "react-bootstrap";
 import CartItem from "./CartItem";
-const productsArr = [
-  {
-    title: "Colors",
+import { useContext } from "react";
+import CartContext from "../../store/cart-context";
+// const productsArr = [
+//   {
+//     title: "Colors",
 
-    price: 100,
+//     price: 100,
 
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-  },
+//     imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
+//   },
 
-  {
-    title: "Black and white Colors",
+//   {
+//     title: "Black and white Colors",
 
-    price: 50,
+//     price: 50,
 
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-  },
+//     imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
+//   },
 
-  {
-    title: "Yellow and Black Colors",
+//   {
+//     title: "Yellow and Black Colors",
 
-    price: 70,
+//     price: 70,
 
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-  },
+//     imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
+//   },
 
-  {
-    title: "Blue Color",
+//   {
+//     title: "Blue Color",
 
-    price: 100,
+//     price: 100,
 
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
-  },
-];
+//     imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
+//   },
+// ];
 const CartModal = (props) => {
-  const cartItemList = productsArr.map((item) => (
+  const cartCtx = useContext(CartContext);
+  const cartItemList = cartCtx.items.map((item) => (
     <CartItem
       name={item.title}
       imgSrc={item.imageUrl}
@@ -48,7 +51,7 @@ const CartModal = (props) => {
       </Modal.Header>
       <Modal.Body>{cartItemList}</Modal.Body>
       <Modal.Footer className="mx-auto flex-column">
-        <h4>Total Amount: ₹{69.69}</h4>
+        <h4>Total Amount: ₹{cartCtx.totalAmount}</h4>
         <Button variant="success">Purchase</Button>
       </Modal.Footer>
     </Modal>
