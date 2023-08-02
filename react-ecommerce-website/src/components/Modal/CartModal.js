@@ -39,6 +39,7 @@ const CartModal = (props) => {
   const cartCtx = useContext(CartContext);
   const cartItemList = cartCtx.items.map((item) => (
     <CartItem
+      key={item.imageUrl}
       name={item.title}
       imgSrc={item.imageUrl}
       price={item.price}

@@ -13,9 +13,14 @@
 .navbar .navs a:hover {
   color: wheat;
 }
-.navbar .btn .cart-item-count{
+.navbar .btn .cart-item-count {
   margin: 3px;
   color: cyan;
   font-weight: bolder;
   font-size: 15px;
+}
+
+.navbar .navs .nav-link.active {
+  color: wheat;
+  text-decoration: underline;
 }
