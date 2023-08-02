@@ -1,34 +1,52 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
 import Loader from "./components/UI/Loader";
 
+let i =0;
 function App() {
+  const intervalId = useRef(null);
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   async function fetchMoviesHandler() {
     setIsLoading(true);
-    const response = await fetch("https://swapi.dev/api/films/");
-    const jsonResponse = await response.json();
-    const moviesList = await jsonResponse.results.map((item) => {
-      return {
-        title: item.title,
-        releaseDate: item.release_date,
-        openingText: item.opening_crawl,
-      };
-    });
+    setError(null);
+    try {
+      const response = await fetch("https://swapi.dev/api/films");
+      if(!response.ok) throw new Error("Something went wrong ....Retrying");
+      const jsonResponse = await response.json();
+      const moviesList = jsonResponse.results.map((item) => {
+        return {
+          title: item.title,
+          releaseDate: item.release_date,
+          openingText: item.opening_crawl,
+        };
+      });
+      setMovies(moviesList);
+    } catch (error) {
+      setError(error.message +" "+(i++));
+      intervalId.current=setTimeout(fetchMoviesHandler,5000);
+    }
     setIsLoading(false);
-    setMovies(moviesList);
   }
+
+  function cancelLoading(){
+    clearTimeout(intervalId.current);
+    setError(null);
+  }
+  let content=<h3>No Movies To Show</h3>;
+  if(movies.length>0) content = <MoviesList movies={movies}/>
+  if(isLoading) content=<Loader/>;
+  if(error) content=<h3>{error} <button onClick={cancelLoading}>Cancel</button></h3>;
   return (
     <React.Fragment>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
       <section>
-        {isLoading && <Loader/>}
-        <MoviesList movies={movies} />
+        {content}
       </section>
     </React.Fragment>
   );
