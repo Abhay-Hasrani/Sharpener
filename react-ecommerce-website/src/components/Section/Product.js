@@ -4,9 +4,11 @@ import { useContext } from "react";
 import CartContext from '../../store/cart-context';
 const Product = (props) => {
   const cartCtx = useContext(CartContext);
-  const addToCartHandler = ()=>{
-
-    cartCtx.addItemToCart({...props,quantity:1,id:props.imageUrl});
+  const addToCartHandler = (e)=>{
+    // Prevent the click from propagating to parent elements 
+    //i.e it will not redirect to deatiled product page
+    e.preventDefault();
+    cartCtx.addItemToCart({...props,quantity:1});
   }
   return (
     <div className="product">

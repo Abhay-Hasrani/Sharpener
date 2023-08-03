@@ -1,3 +1,5 @@
+
+import { Link } from "react-router-dom";
 import Product from "./Product";
 import './Section.css'
 const productsArr = [
@@ -36,7 +38,9 @@ const productsArr = [
 const Section = (props) => {
   const productList = productsArr.map((item) => {
     return (
-      <Product key={item.imageUrl} title={item.title} price={item.price} imageUrl={item.imageUrl} />
+      <Link style={{textDecoration:"none"}} to={`/store/${item.title}`}>
+      <Product  key={item.title} id={item.title} title={item.title} price={item.price} imageUrl={item.imageUrl} />
+      </Link>
     );
   });
   return (

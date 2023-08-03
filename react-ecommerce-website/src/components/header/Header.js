@@ -34,7 +34,7 @@ function Header(props) {
               <Nav.Link as={NavLink} to="home">
                 Home
               </Nav.Link>
-              <Nav.Link as={NavLink} to="/" end>
+              <Nav.Link as={NavLink} to="/store" end>
                 Store
               </Nav.Link>
               <Nav.Link as={NavLink} to="/about">
