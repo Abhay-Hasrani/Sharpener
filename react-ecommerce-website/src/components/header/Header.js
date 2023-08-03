@@ -40,6 +40,9 @@ function Header(props) {
               <Nav.Link as={NavLink} to="/about">
                 About
               </Nav.Link>
+              <Nav.Link as={NavLink} to="/contactus">
+                Contact Us
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

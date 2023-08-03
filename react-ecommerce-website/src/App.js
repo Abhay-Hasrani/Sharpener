@@ -9,6 +9,7 @@ import CartProvider from "./store/CartProvider";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import About from "./components/about/About";
 import Home from "./components/home/Home";
+import ContactUs from "./components/contact_us/ContactUs";
 function App() {
   const [cartVisibility, setCartVisibility] = useState(false);
   function showCart() {
@@ -28,6 +29,7 @@ function App() {
               <Route path="/" element={<Section title="Sale Items" />} />
               <Route path="/about" element={<About />} />
               <Route path="/home" element={<Home />} />
+              <Route path="/contactus" element={<ContactUs />} />
             </Routes>
           </div>
         </Router>
