@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import MoviesList from "./components/MoviesList";
 import "./App.css";
 import Loader from "./components/UI/Loader";
+import MovieForm from "./components/MovieForm";
 
 let i = 0;
 function App() {
@@ -12,7 +13,6 @@ function App() {
   const [error, setError] = useState(null);
 
   const fetchMoviesHandler = useCallback(async () => {
-    console.log("called");
     setIsLoading(true);
     setError(null);
     try {
@@ -37,7 +37,7 @@ function App() {
 
   useEffect(() => {
     fetchMoviesHandler();
-  }, []);
+  }, [fetchMoviesHandler]);
 
   function cancelLoading() {
     clearTimeout(intervalId.current);
@@ -56,6 +56,9 @@ function App() {
 
   return (
     <React.Fragment>
+      <section>
+        <MovieForm/>
+      </section>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
