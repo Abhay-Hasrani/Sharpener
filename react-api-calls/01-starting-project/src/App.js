@@ -44,9 +44,16 @@ function App() {
     clearTimeout(intervalId.current);
     setError(null);
   }
+  function onMovieDeleteHandler(id){
+    console.log("app");
+    setMovies(prev=>{
+      const newarr = prev.filter((item)=>item.id!=id);
+      return newarr;
+    });
+  }
 
   let content = <h3>No Movies To Show</h3>;
-  if (movies.length > 0) content = <MoviesList movies={movies} />;
+  if (movies.length > 0) content = <MoviesList onDelete={onMovieDeleteHandler} movies={movies} />;
   if (isLoading) content = <Loader />;
   if (error)
     content = (
