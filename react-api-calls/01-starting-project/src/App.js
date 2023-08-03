@@ -4,6 +4,7 @@ import MoviesList from "./components/MoviesList";
 import "./App.css";
 import Loader from "./components/UI/Loader";
 import MovieForm from "./components/MovieForm";
+import AddMovie from "./components/AddMovie";
 
 let i = 0;
 function App() {
@@ -54,10 +55,16 @@ function App() {
       </h3>
     );
 
+    function addMovieHandler(movie) {
+      console.log(movie);
+    }
+
   return (
     <React.Fragment>
       <section>
-        <MovieForm/>
+        {/* <MovieForm/> 
+        using udemy trainers form instead of above */}
+        <AddMovie onAddMovie={addMovieHandler}/>
       </section>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
