@@ -1,7 +1,9 @@
 import { useState, useRef, useContext } from "react";
 import UserContext from "../../store/user-context";
 import classes from "./AuthForm.module.css";
+import { useHistory } from "react-router-dom";
 const AuthForm = () => {
+  let history = useHistory();
   const userCtx = useContext(UserContext);
   const emailRef = useRef();
   const passRef = useRef();
@@ -38,6 +40,7 @@ const AuthForm = () => {
       if (isLogin) {
         console.log("IDToken = ", data.idToken);
         userCtx.setIdToken(data.idToken);
+        history.push('/profile');
       }
     } else {
       let errorMessage = "Authentication Failed";
