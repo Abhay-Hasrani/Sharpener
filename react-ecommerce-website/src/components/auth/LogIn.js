@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import LoadingIndicator from "../UI/LoadingIndicator";
@@ -10,6 +10,10 @@ function Auth() {
   const [isLoading, setIsLoading] = useState(false);
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
+  const isLoggedIn = authCtx.idToken!=null;
+  useEffect(()=>{
+    if(isLoggedIn) authCtx.setIdToken(null);
+  },[]);
   async function authFormSubmitHandler(e) {
     e.preventDefault();
     setIsLoading(true);

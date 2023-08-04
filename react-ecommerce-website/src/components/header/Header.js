@@ -7,9 +7,12 @@ import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import CartContext from "../../store/cart-context";
 import { Outlet } from "react-router-dom";
+import AuthContext from "../../store/AuthProvider";
 
 function Header(props) {
   const cartCtx = useContext(CartContext);
+  const authCtx = useContext(AuthContext);
+  const isLoggedIn = authCtx.idToken!=null;
   return (
     <>
       <Navbar expand="lg" className="navbar bg-black fixed-top">
@@ -31,6 +34,7 @@ function Header(props) {
           />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="navs w-100 justify-content-evenly fw-bold fs-5">
+             {isLoggedIn && <>
               <Nav.Link as={NavLink} to="home">
                 Home
               </Nav.Link>
@@ -43,8 +47,9 @@ function Header(props) {
               <Nav.Link as={NavLink} to="/contactus">
                 Contact Us
               </Nav.Link>
+              </>}
               <Nav.Link as={NavLink} to="/auth">
-                LogIn
+                {isLoggedIn?"LogOut":"LogIn"}
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
