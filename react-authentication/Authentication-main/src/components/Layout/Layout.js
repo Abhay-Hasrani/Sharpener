@@ -1,13 +1,16 @@
-import { Fragment } from 'react';
+import { Fragment } from "react";
 
-import MainNavigation from './MainNavigation';
+import MainNavigation from "./MainNavigation";
+import UserProvider from "../../store/UserProvider";
 
 const Layout = (props) => {
   return (
-    <Fragment>
-      <MainNavigation />
-      <main>{props.children}</main>
-    </Fragment>
+    <UserProvider>
+      <Fragment>
+        <MainNavigation />
+        <main>{props.children}</main>
+      </Fragment>
+    </UserProvider>
   );
 };
 
