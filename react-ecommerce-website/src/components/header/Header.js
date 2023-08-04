@@ -43,6 +43,9 @@ function Header(props) {
               <Nav.Link as={NavLink} to="/contactus">
                 Contact Us
               </Nav.Link>
+              <Nav.Link as={NavLink} to="/auth">
+                LogIn
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

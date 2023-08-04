@@ -11,6 +11,7 @@ import About from "./components/about/About";
 import Home from "./components/home/Home";
 import ContactUs from "./components/contact_us/ContactUs";
 import DetailedProduct from "./components/Section/DetailedProduct";
+import Auth from "./components/auth/LogIn";
 function App() {
   const [cartVisibility, setCartVisibility] = useState(false);
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/home" element={<Home />} />
             <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/auth" element={<Auth />} />
           </Routes>
         </div>
         <Footer />
