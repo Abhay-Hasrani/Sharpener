@@ -1,12 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import UserContext from "../../store/user-context";
 import classes from "./MainNavigation.module.css";
 import { useContext } from "react";
 const MainNavigation = () => {
   const userCtx = useContext(UserContext);
-
+  const history = useHistory();
   const logoutButtonClickHandler = (e) => {
     userCtx.setIdToken(null);
+    history.replace('./auth');
   };
 
   return (
