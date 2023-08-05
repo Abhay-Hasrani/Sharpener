@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import "./App.css";
 import Section from "./components/Section/Section";
 import Footer from "./components/footer/Footer";
@@ -6,7 +6,7 @@ import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
 import CartModal from "./components/Modal/CartModal";
 import CartProvider from "./store/CartProvider";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import About from "./components/about/About";
 import Home from "./components/home/Home";
 import ContactUs from "./components/contact_us/ContactUs";
@@ -15,13 +15,10 @@ import Auth from "./components/auth/LogIn";
 import AuthContext from "./store/AuthProvider";
 function App() {
   const [cartVisibility, setCartVisibility] = useState(false);
-  const navigate = useNavigate();
+
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.idToken != null;
 
-  useEffect(() => {
-    navigate("/store");
-  }, []);
   function showCart() {
     setCartVisibility(true);
   }

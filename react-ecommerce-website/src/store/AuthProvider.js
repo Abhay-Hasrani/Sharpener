@@ -13,7 +13,7 @@ export const AuthProvider = (props) => {
         token = obj.token;
         logInTime = obj.logInTime;
     }
-    if (logInTime != null && Date.now() - logInTime > 5 * 60 * 1000) {
+    if (logInTime != null && Date.now() - logInTime > 10 * 60 * 1000) {
         localStorage.setItem("idToken", JSON.stringify({
             token: null,
             logInTime: null,

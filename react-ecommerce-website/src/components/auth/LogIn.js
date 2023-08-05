@@ -10,10 +10,12 @@ function Auth() {
   const [isLoading, setIsLoading] = useState(false);
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
-  const isLoggedIn = authCtx.idToken!=null;
-  useEffect(()=>{
-    if(isLoggedIn) authCtx.setIdToken(null);
-  },[]);
+  const isLoggedIn = authCtx.idToken != null;
+
+  useEffect(() => {
+    if (isLoggedIn) authCtx.setIdToken(null);
+  }, []);
+
   async function authFormSubmitHandler(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -21,7 +23,6 @@ function Auth() {
     const enteredPassword = passRef.current.value;
     const url =
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDw5CCDQ6E-9CjH3S4RnAR1LHpPmIEt_ao";
-
     const res = await fetch(url, {
       method: "POST",
       body: JSON.stringify({
@@ -37,8 +38,10 @@ function Auth() {
     setIsLoading(false);
     console.log(data);
     if (res.ok) {
-      console.log("IDToken = ", data.idToken);
+      // console.log("IDToken = ", data.idToken);
       authCtx.setIdToken(data.idToken);
+      const formattedEmail = data.email.replace(/[@.]/g,"");
+      localStorage.setItem("loggedUserEmail",formattedEmail)
       navigate("/store");
     } else {
       let errorMessage = "Authentication Failed";

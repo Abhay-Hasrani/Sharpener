@@ -40,9 +40,11 @@ const CartModal = (props) => {
   const cartItemList = cartCtx.items.map((item) => (
     <CartItem
       key={item.imageUrl}
+      id={item.id}
       name={item.title}
       imgSrc={item.imageUrl}
       price={item.price}
+      quantity={item.quantity}
     />
   ));
   return (
