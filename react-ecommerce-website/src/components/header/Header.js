@@ -20,14 +20,14 @@ function Header(props) {
           <Navbar.Brand className="fw-bold fs-3 brand" href="">
             ShopItUp
           </Navbar.Brand>
-          <Button
+          {isLoggedIn && <Button
             onClick={props.showCart}
             variant="outline-light"
             className="button ms-auto"
           >
             Cart
             <sup className="cart-item-count">{cartCtx.totalItems}</sup>
-          </Button>
+          </Button>}
           <Navbar.Toggle
             className="bg-light m-2"
             aria-controls="basic-navbar-nav"
