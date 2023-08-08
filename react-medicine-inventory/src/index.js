@@ -1,12 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import MedicineProvider from "./store/MedicineProvider";
+import CartProvider from "./store/CartProvider";
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <App />
+  <MedicineProvider>
+    <CartProvider>
+      <App />
+    </CartProvider>
+  </MedicineProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
