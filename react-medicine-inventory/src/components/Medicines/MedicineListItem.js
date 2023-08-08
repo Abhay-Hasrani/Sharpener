@@ -12,9 +12,10 @@ const MedicineListItem = (props) => {
     const buyingQuantity = +e.target[0].value;
     medicineCtx.updateMedicineQuantity(props.item.id, 0 - buyingQuantity);
     cartCtx.addItemToCart({ ...props.item, quantity: buyingQuantity });
+    e.target.reset();
   }
   let quantityValue = props.item.quantity;
-  if (props.item.quantity == 0) {
+  if (props.item.quantity === 0) {
     quantityValue = "Out Of Stock";
   }
 
@@ -26,7 +27,7 @@ const MedicineListItem = (props) => {
       <span>{quantityValue} </span>
       <form onSubmit={addToCartHandler}>
         <label htmlFor="medicine_buy_quantity">Select Amount:</label>
-        <input type="number" id="medicine_buy_quantity" min="1" />
+        <input type="number" id="medicine_buy_quantity" min="1" defaultValue={1} max={quantityValue} />
         <button
           id="add_to_cart"
           style={{

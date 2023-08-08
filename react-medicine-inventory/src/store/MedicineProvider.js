@@ -1,44 +1,113 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MedicineContext from "./medicine-context";
 const MedicineProvider = (props) => {
-  
+  const baseurl =
+    "https://crudcrud.com/api/4f0370db0fca4c2d84c51286d551c481/medicines";
+
+  useEffect(() => {
+    async function getMedicinesFromDatabase() {
+      const res = await fetch(baseurl);
+      if (res.ok) {
+        const data = await res.json();
+        // console.log(data);
+        updateMedicineContext((prev) => {
+          prev.medicines = data;
+          return { ...prev };
+        });
+      } else {
+        alert(
+          "getMedicinesFromDatabase : " + res.status + " " + res.statusText
+        );
+      }
+    }
+    getMedicinesFromDatabase();
+  }, []);
+
+  async function addMedicineToDatabase(medicineObj, updateObjWithDatabaseId) {
+    const url = baseurl;
+    const bodyObj = medicineObj;
+    const methodType = "POST";
+    const res = await fetch(url, {
+      method: methodType,
+      body: JSON.stringify(bodyObj),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      updateObjWithDatabaseId(data._id);
+      console.log("added: " + data._id);
+    } else {
+      alert("addMedicineToDatabase : " + res.status + " " + res.statusText);
+    }
+  }
+
+  async function updateMedicineInDatabase(medicineObj, databaseId) {
+    const url = baseurl + "/" + databaseId;
+    // const bodyObj = medicineObj;
+    const methodType = "PUT";
+    const res = await fetch(url, {
+      method: methodType,
+      body: JSON.stringify({
+        id: medicineObj.id,
+        name: medicineObj.name,
+        quantity: medicineObj.quantity,
+        description: medicineObj.description,
+        price: medicineObj.price}),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      console.log("updated : "+res.statusText);
+    } else {
+      alert("updateMedicineInDatabase : " + res.status + " " + res.statusText);
+    }
+  }
+
   const addMedicineHandler = (medicineObj) => {
     updateMedicineContext((prev) => {
       const index = prev.medicines.findIndex(
         (item) => item.id === medicineObj.id
-        );
-        if (index === -1) {
-          prev.medicines.push(medicineObj);
-        } else {
-          // console.log(prev.medicines[index].quantity," ",medicineObj.quantity)
-          prev.medicines[index].quantity += (+medicineObj.quantity);
+      );
+      if (index === -1) {
+        function updateObjWithDatabaseId(databaseId) {
+          medicineObj._id = databaseId;
         }
-        
-        return { ...prev };
-      });
-    };
-    function updateMedicineQuantityHandler(id,amount){
-      updateMedicineContext((prev)=>{
-        const index = prev.medicines.findIndex(
-          (item) => item.id === id
-          );
-          prev.medicines[index].quantity += amount;
-          if(prev.medicines[index].quantity<0) prev.medicines[index].quantity=0;
-          return {...prev};
-      })
-    }
-    function isInStock(id){
-      return medicineContext.medicines.find(
-        (item) => (item.id === id && item.quantity>0)
-        ); 
-    }
+        addMedicineToDatabase(medicineObj, updateObjWithDatabaseId);
+        prev.medicines.push(medicineObj);
+      } else {
+        // console.log(prev.medicines[index].quantity," ",medicineObj.quantity)
+        prev.medicines[index].quantity += +medicineObj.quantity;
+        updateMedicineInDatabase(prev.medicines[index], prev.medicines[index]._id);
+      }
+      return { ...prev };
+    });
+  };
+  function updateMedicineQuantityHandler(id, amount) {
+    updateMedicineContext((prev) => {
+      const index = prev.medicines.findIndex((item) => item.id === id);
+      const medicineObj = prev.medicines[index];
+      medicineObj.quantity += amount;
+      if (medicineObj.quantity < 0) medicineObj.quantity = 0;
+
+      updateMedicineInDatabase(medicineObj, medicineObj._id);
+      return { ...prev };
+    });
+  }
+  function isInStock(id) {
+    return medicineContext.medicines.find(
+      (item) => item.id === id && item.quantity > 0
+    );
+  }
   const [medicineContext, updateMedicineContext] = useState({
     medicines: [],
     addMedicine: addMedicineHandler,
-    updateMedicineQuantity : updateMedicineQuantityHandler,
-    isInStock : isInStock
+    updateMedicineQuantity: updateMedicineQuantityHandler,
+    isInStock: isInStock,
   });
-  
+
   return (
     <MedicineContext.Provider value={medicineContext}>
       {props.children}

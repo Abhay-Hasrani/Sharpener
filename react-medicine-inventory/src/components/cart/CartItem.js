@@ -24,8 +24,8 @@ const CartItem = (props) => {
       <span>{props.item.description + " "}</span>
       <span>{"₹" + props.item.price + " "}</span>
       <span>{props.item.quantity + " "}</span>
-      <button onClick={onPlusClickHandler}>" +1 "</button>
-      <button onClick={onMinusClickHandler}>" -1 "</button>
+      <button onClick={onPlusClickHandler}> +1 </button>
+      <button onClick={onMinusClickHandler}> -1 </button>
     </li>
   );
 };
