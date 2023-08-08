@@ -3,7 +3,7 @@ import CartContext from "./cart-context";
 
 const CartProvider = (props) => {
   const baseUrl =
-    "https://crudcrud.com/api/1739700753774bdcbfd4f8f99e8a77f4/222";
+    "https://crudcrud.com/api/106e87a08f69458f874ebb2abd209c3e/cart";
   const emailID = localStorage.getItem("loggedUserEmail");
   let databaseid = null;
   const [cartContextValue, updateCartContextValue] = useState({
