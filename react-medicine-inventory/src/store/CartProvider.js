@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import CartContext from "./cart-context";
 const CartProvider = (props) => {
   const baseurl =
-    "https://crudcrud.com/api/4f0370db0fca4c2d84c51286d551c481/cart1";
+    "https://crudcrud.com/api/ad5300ca3c3c4ecc9b5f5a21d211fb47/cart1";
   const [cartContext, updateCartContext] = useState({
     items: [],
     totalItems: 0,

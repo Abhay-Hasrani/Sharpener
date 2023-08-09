@@ -16,17 +16,18 @@ const AddProductForm = () => {
       price: formattedPrice,
       quantity: (+e.target[3].value),
     });
+    e.target.reset();
   }
   return (
     <form onSubmit={AddProductFormHandler}>
       <label htmlFor="medicine_name">Medicine Name:</label>
-      <input type="text" id="medicine_name" />
+      <input type="text" id="medicine_name" required/>
       <label htmlFor="medicine_description">Description:</label>
       <input type="text" id="medicine_description" />
       <label htmlFor="medicine_price"> Price:</label>
       <input type="number" id="medicine_price" min={1} />
       <label htmlFor="medicine_quantity">Quantity:</label>
-      <input type="number" id="medicine_quantity" min={1} />
+      <input type="number" id="medicine_quantity" min={1} defaultValue={1} required />
       <button type="submit">Add Product</button>
     </form>
   );

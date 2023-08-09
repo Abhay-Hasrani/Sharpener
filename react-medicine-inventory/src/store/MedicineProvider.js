@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import MedicineContext from "./medicine-context";
 const MedicineProvider = (props) => {
   const baseurl =
-    "https://crudcrud.com/api/4f0370db0fca4c2d84c51286d551c481/medicines";
+    "https://crudcrud.com/api/ad5300ca3c3c4ecc9b5f5a21d211fb47/medicines1";
 
   useEffect(() => {
     async function getMedicinesFromDatabase() {
@@ -45,16 +45,17 @@ const MedicineProvider = (props) => {
 
   async function updateMedicineInDatabase(medicineObj, databaseId) {
     const url = baseurl + "/" + databaseId;
-    // const bodyObj = medicineObj;
+    const {_id,...bodyObj} = medicineObj;
     const methodType = "PUT";
     const res = await fetch(url, {
       method: methodType,
-      body: JSON.stringify({
-        id: medicineObj.id,
-        name: medicineObj.name,
-        quantity: medicineObj.quantity,
-        description: medicineObj.description,
-        price: medicineObj.price}),
+      body : JSON.stringify(bodyObj),
+      // body: JSON.stringify({
+      //   id: medicineObj.id,
+      //   name: medicineObj.name,
+      //   quantity: medicineObj.quantity,
+      //   description: medicineObj.description,
+      //   price: medicineObj.price}),
       headers: {
         "Content-Type": "application/json",
       },
