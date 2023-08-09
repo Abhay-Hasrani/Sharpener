@@ -1,5 +1,5 @@
 import { Button, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
     const navigate = useNavigate();
@@ -40,10 +40,6 @@ const SignIn = () => {
       alert("Firebase SignIn : " + data.error.message);
     }
   }
-
-  function navigateToForgotPasswordPage(){
-    navigate("/forgotPassword")
-  }
   return (
     <div>
     <Form onSubmit={userSignInFormHandler}>
@@ -67,8 +63,7 @@ const SignIn = () => {
       </Form.Group>
       <Button type="submit">Sign In</Button>
     </Form>
-    <br/>
-    <Button onClick={navigateToForgotPasswordPage}>Forgot Password</Button>
+    <NavLink to="/forgotPassword">Forgot Password</NavLink>
     </div>
   );
 };

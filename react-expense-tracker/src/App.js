@@ -6,6 +6,7 @@ import Welcome from "./components/Welcome";
 import UpdateProfile from "./components/UpdateProfile";
 import { Button } from "react-bootstrap";
 import ForgotPassword from "./components/auth/ForgotPassword";
+import ExpenseManager from "./components/main/ExpenseManager";
 function App() {
   const navigate = useNavigate();
   function logoutClickHandler() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/updateProfile" element={<UpdateProfile />} />
+        <Route path="/expenseManager" element={<ExpenseManager />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
