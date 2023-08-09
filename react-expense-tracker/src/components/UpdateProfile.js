@@ -22,7 +22,7 @@ const UpdateProfile = () => {
       );
 
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       if (res.ok) {
         setProfileObj({
           username: data.users[0].displayName,
@@ -69,30 +69,58 @@ const UpdateProfile = () => {
       alert("Firebase UpdateProfile : " + data.error.message);
     }
   }
+
+  async function profileEmailVerifyHandler() {
+    const res = await fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDehsjS-i9vFZpBlJJXD-9fd0v-_UMtC6M",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          idToken: localStorage.getItem("userIdToken"),
+          requestType: "VERIFY_EMAIL",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const data = await res.json();
+    // console.log(data);
+    if (res.ok) {
+      console.log("verified :", data.email);
+    } else {
+      alert("Firebase Email Verify : " + data.error.message);
+    }
+  }
   return (
-    <Form onSubmit={userUpdateProfileFormHandler}>
-      <Form.Group controlId="signInEmail">
-        <Form.Label>Username :</Form.Label>
-        <Form.Control
-          type="text"
-          name="username"
-          placeholder="Enter username"
-          defaultValue={profileObj.username}
-          required
-        />
-      </Form.Group>
-      <Form.Group controlId="signInPassword">
-        <Form.Label>Profile Photo URL :</Form.Label>
-        <Form.Control
-          type="url"
-          name="photoUrl"
-          placeholder="Enter photo url"
-          defaultValue={profileObj.photoUrl}
-          required
-        />
-      </Form.Group>
-      <Button type="submit">Update Profile</Button>
-    </Form>
+    <div>
+      <Form onSubmit={userUpdateProfileFormHandler}>
+        <Form.Group controlId="signInEmail">
+          <Form.Label>Username :</Form.Label>
+          <Form.Control
+            type="text"
+            name="username"
+            placeholder="Enter username"
+            defaultValue={profileObj.username}
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="signInPassword">
+          <Form.Label>Profile Photo URL :</Form.Label>
+          <Form.Control
+            type="url"
+            name="photoUrl"
+            placeholder="Enter photo url"
+            defaultValue={profileObj.photoUrl}
+            required
+          />
+        </Form.Group>
+        <Button type="submit">Update Profile</Button>
+      </Form>
+      <br />
+      <Button onClick={profileEmailVerifyHandler}>Verify Email</Button>
+    </div>
   );
 };
 export default UpdateProfile;
