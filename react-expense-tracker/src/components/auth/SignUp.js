@@ -73,7 +73,7 @@ const SignUp = () => {
           required
         />
       </Form.Group>
-      <Button type="submit">Submit form</Button>
+      <Button type="submit">Sign Up</Button>
     </Form>
   );
 };

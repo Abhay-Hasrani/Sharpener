@@ -1,6 +1,8 @@
 import { Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+    const navigate = useNavigate();
   function userSignInFormHandler(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -33,6 +35,7 @@ const SignIn = () => {
     console.log(data);
     if (res.ok) {
       localStorage.setItem("userIdToken", data.idToken);
+      navigate('/welcome');
     } else {
       alert("Firebase SignIn : " + data.error.message);
     }
@@ -57,7 +60,7 @@ const SignIn = () => {
           required
         />
       </Form.Group>
-      <Button type="submit">Submit form</Button>
+      <Button type="submit">Sign In</Button>
     </Form>
   );
 };
