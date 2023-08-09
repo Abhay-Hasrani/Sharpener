@@ -1,8 +1,39 @@
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 // https://images.app.goo.gl/mH1DUpesEVmgHJAZ7
 const UpdateProfile = () => {
-  const navigate = useNavigate();
+  const [profileObj, setProfileObj] = useState({
+    username: "",
+    photoUrl: "",
+  });
+  useEffect(() => {
+    async function getUserProfileFromFirebase() {
+      const res = await fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDehsjS-i9vFZpBlJJXD-9fd0v-_UMtC6M",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            idToken: localStorage.getItem("userIdToken"),
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
+        setProfileObj({
+          username: data.users[0].displayName,
+          photoUrl: data.users[0].photoUrl,
+        });
+      } else {
+        alert("Firebase Get Profile : " + data.error.message);
+      }
+    }
+    getUserProfileFromFirebase();
+  }, []);
   function userUpdateProfileFormHandler(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -31,7 +62,7 @@ const UpdateProfile = () => {
     );
 
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     if (res.ok) {
       console.log("updated");
     } else {
@@ -46,6 +77,7 @@ const UpdateProfile = () => {
           type="text"
           name="username"
           placeholder="Enter username"
+          defaultValue={profileObj.username}
           required
         />
       </Form.Group>
@@ -55,6 +87,7 @@ const UpdateProfile = () => {
           type="url"
           name="photoUrl"
           placeholder="Enter photo url"
+          defaultValue={profileObj.photoUrl}
           required
         />
       </Form.Group>
