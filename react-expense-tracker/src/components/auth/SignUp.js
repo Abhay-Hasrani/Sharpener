@@ -11,8 +11,8 @@ const SignUp = () => {
     const enteredEmail = formObj.email;
     const enteredPass = formObj.password;
     const enteredConfirmPass = formObj.confirmPassword;
-    if (enteredPass != enteredConfirmPass) {
-      console.log("password didnt match");
+    if (enteredPass !== enteredConfirmPass) {
+      console.log("password didnt match"); 
     } else {
       firebaseSignUpHandler(enteredEmail, enteredPass);
     }

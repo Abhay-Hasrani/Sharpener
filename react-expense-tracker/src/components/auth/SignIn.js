@@ -32,7 +32,7 @@ const SignIn = () => {
     );
 
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     if (res.ok) {
       localStorage.setItem("userIdToken", data.idToken);
       navigate('/welcome');
@@ -40,7 +40,12 @@ const SignIn = () => {
       alert("Firebase SignIn : " + data.error.message);
     }
   }
+
+  function navigateToForgotPasswordPage(){
+    navigate("/forgotPassword")
+  }
   return (
+    <div>
     <Form onSubmit={userSignInFormHandler}>
       <Form.Group controlId="signInEmail">
         <Form.Label>Email address</Form.Label>
@@ -62,6 +67,9 @@ const SignIn = () => {
       </Form.Group>
       <Button type="submit">Sign In</Button>
     </Form>
+    <br/>
+    <Button onClick={navigateToForgotPasswordPage}>Forgot Password</Button>
+    </div>
   );
 };
 export default SignIn;

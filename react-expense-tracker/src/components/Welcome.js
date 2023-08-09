@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import UpdateProfile from "../UpdateProfile";
 
 const Welcome = ()=>{
     const navigate =useNavigate();
