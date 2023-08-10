@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-// https://images.app.goo.gl/mH1DUpesEVmgHJAZ7
+import AuthContext from "../store/AuthProvider";
 const UpdateProfile = () => {
+  const authContext = useContext(AuthContext);
+  const token = authContext.idToken;
   const [profileObj, setProfileObj] = useState({
     username: "",
     photoUrl: "",
@@ -13,7 +15,7 @@ const UpdateProfile = () => {
         {
           method: "POST",
           body: JSON.stringify({
-            idToken: localStorage.getItem("userIdToken"),
+            idToken: token,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -50,7 +52,7 @@ const UpdateProfile = () => {
       {
         method: "POST",
         body: JSON.stringify({
-          idToken: localStorage.getItem("userIdToken"),
+          idToken: token,
           displayName: username,
           photoUrl: photoUrl,
           returnSecureToken: true,
@@ -76,7 +78,7 @@ const UpdateProfile = () => {
       {
         method: "POST",
         body: JSON.stringify({
-          idToken: localStorage.getItem("userIdToken"),
+          idToken: localStorage.getItem("idToken"),
           requestType: "VERIFY_EMAIL",
         }),
         headers: {

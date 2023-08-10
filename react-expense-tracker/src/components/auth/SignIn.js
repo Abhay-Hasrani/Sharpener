@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { Button, Form } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
+import AuthContext from "../../store/AuthProvider";
 
 const SignIn = () => {
     const navigate = useNavigate();
+    const authCtx = useContext(AuthContext);
   function userSignInFormHandler(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -34,7 +37,8 @@ const SignIn = () => {
     const data = await res.json();
     // console.log(data);
     if (res.ok) {
-      localStorage.setItem("userIdToken", data.idToken);
+      // localStorage.setItem("userIdToken", data.idToken);
+      authCtx.setIdToken(data.idToken);
       navigate('/welcome');
     } else {
       alert("Firebase SignIn : " + data.error.message);
@@ -63,6 +67,7 @@ const SignIn = () => {
       </Form.Group>
       <Button type="submit">Sign In</Button>
     </Form>
+    <NavLink to="/signUp">New User? Create a Account !!</NavLink><br/>
     <NavLink to="/forgotPassword">Forgot Password</NavLink>
     </div>
   );

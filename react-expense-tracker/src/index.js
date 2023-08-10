@@ -5,10 +5,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ExpenseProvider } from "./store/ExpenseProvider";
+import { AuthProvider } from "./store/AuthProvider";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Router>
+    <AuthProvider>
+      <ExpenseProvider>
     <App />
+    </ExpenseProvider>
+    </AuthProvider>
   </Router>
 );
 

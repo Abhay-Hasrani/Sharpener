@@ -1,14 +1,17 @@
+import { useContext } from "react";
 import { Button, Form } from "react-bootstrap";
+import ExpenseContext from "../../store/ExpenseProvider";
 
 const ExpenseForm = () => {
+  const expenseCtx = useContext(ExpenseContext);
   function expenseFormSubmitHandler(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const ExpenseObj = {};
+    const expenseObj = {};
     for (const [name, value] of formData.entries()) {
-        ExpenseObj[name] = value;
+        expenseObj[name] = value;
     }
-    //addToExpenseContext(ExpenseObj);
+    expenseCtx.addExpense(expenseObj);
   }
 
   return (
@@ -42,7 +45,7 @@ const ExpenseForm = () => {
             <option>Bills</option>
         </Form.Control>
       </Form.Group>
-      <Button type="submit">Send Link</Button>
+      <Button type="submit">Add Expense</Button>
     </Form>
   );
 };
