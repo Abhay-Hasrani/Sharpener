@@ -1,10 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Button, Nav, Navbar } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import AuthContext from "../../store/AuthProvider";
 
 const Header = () => {
-  const [isLogged,setIsLogged] = useState(false);
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
   function logoutClickHandler() {
