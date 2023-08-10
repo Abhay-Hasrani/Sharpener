@@ -1,7 +1,8 @@
 import { Button, Form } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   function userSignUpFormHandler(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -37,6 +38,8 @@ const SignUp = () => {
     const data = await res.json();
     if (res.ok) {
       console.log(data);
+      alert("Account Created Successfully!! PleaseLogIn!!");
+      navigate("/");
     } else {
       alert("FireBaseSignUp : " + data.error.message);
     }

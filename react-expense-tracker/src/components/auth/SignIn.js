@@ -39,7 +39,9 @@ const SignIn = () => {
     if (res.ok) {
       // localStorage.setItem("userIdToken", data.idToken);
       authCtx.setIdToken(data.idToken);
-      navigate('/welcome');
+      const formattedEmail = data.email.replace(/[.@]/g,"")
+      localStorage.setItem("email",formattedEmail);
+      navigate('/expenseManager');
     } else {
       alert("Firebase SignIn : " + data.error.message);
     }

@@ -14,6 +14,7 @@ export const AuthProvider = (props) => {
     logInTime = obj.logInTime;
   }
   if (logInTime != null && Date.now() - logInTime > 10 * 60 * 1000) {
+    localStorage.setItem("email",null);
     localStorage.setItem(
       "idToken",
       JSON.stringify({
@@ -28,6 +29,7 @@ export const AuthProvider = (props) => {
     setIdToken: setIdTokenHandler,
   });
   function setIdTokenHandler(idToken) {
+    if(idToken==null) localStorage.setItem("email",null);
     setAuthContext((prev) => {
       localStorage.setItem(
         "idToken",

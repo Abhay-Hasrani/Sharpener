@@ -26,7 +26,7 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
         {isLogged && (
           <>
-            <Route path="/welcome" element={<Welcome />} />
+            {/* <Route path="/welcome" element={<Welcome />} /> */}
             <Route path="/updateProfile" element={<UpdateProfile />} />
             <Route path="/expenseManager" element={<ExpenseManager />} />
           </>
