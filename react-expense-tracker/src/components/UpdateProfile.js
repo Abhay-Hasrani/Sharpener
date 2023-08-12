@@ -1,9 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import AuthContext from "../store/AuthProvider";
+import { useSelector } from "react-redux";
+// import AuthContext from "../store/AuthProvider";
 const UpdateProfile = () => {
-  const authContext = useContext(AuthContext);
-  const token = authContext.idToken;
+  // const authContext = useContext(AuthContext);
+  // const token = authContext.idToken;
+  const token = useSelector((state) => state.auth.idToken);
   const [profileObj, setProfileObj] = useState({
     username: "",
     photoUrl: "",

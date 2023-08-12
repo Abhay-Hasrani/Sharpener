@@ -1,22 +1,36 @@
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Button, FormControl, Modal } from "react-bootstrap";
-import ExpenseContext from "../../store/ExpenseProvider";
+import { useDispatch } from "react-redux";
+import { expenseActions } from "../../store/ExpenseReducer";
+// import ExpenseContext from "../../store/ExpenseProvider";
 
 const ExpenseListItem = (props) => {
   const [showModal, setShowModal] = useState(false);
-  const expenseCtx = useContext(ExpenseContext);
+  // const expenseCtx = useContext(ExpenseContext);
+  const dispatch = useDispatch();
   const amountRef = useRef();
   const typeRef = useRef();
   const descriptionRef = useRef();
   function deleteExpenseClickHandler(e) {
-    expenseCtx.deleteExpense(props.id);
+    // expenseCtx.deleteExpense(props.id);
+    dispatch(expenseActions.deleteExpense(props.id));
   }
   function updateExpenseHandler() {
-    expenseCtx.editExpense(props.id, {
-      amount: amountRef.current.value,
-      type: typeRef.current.value,
-      description: descriptionRef.current.value,
-    });
+    // expenseCtx.editExpense(props.id, {
+    //   amount: amountRef.current.value,
+    //   type: typeRef.current.value,
+    //   description: descriptionRef.current.value,
+    // });
+    dispatch(
+      expenseActions.editExpense({
+        id: props.id,
+        expense: {
+          amount: amountRef.current.value,
+          type: typeRef.current.value,
+          description: descriptionRef.current.value,
+        },
+      })
+    );
     setShowModal(false);
   }
   return (
@@ -55,7 +69,13 @@ const ExpenseListItem = (props) => {
             defaultValue={props.description}
             required
           />
-          <FormControl as="select" name="type" ref={typeRef} defaultValue={props.type} required>
+          <FormControl
+            as="select"
+            name="type"
+            ref={typeRef}
+            defaultValue={props.type}
+            required
+          >
             <option>Others</option>
             <option>Food</option>
             <option>Fuel</option>

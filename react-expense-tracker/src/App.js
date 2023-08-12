@@ -1,22 +1,22 @@
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
-import Welcome from "./components/Welcome";
+// import Welcome from "./components/Welcome";
 import UpdateProfile from "./components/UpdateProfile";
-import { Button } from "react-bootstrap";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import ExpenseManager from "./components/main/ExpenseManager";
 import Header from "./components/header/Header";
-import { useContext, useEffect, useState } from "react";
-import AuthContext from "./store/AuthProvider";
+// import { useContext, useEffect, useState } from "react";
+// import AuthContext from "./store/AuthProvider";
+import { useSelector } from "react-redux";
 function App() {
-  const authCtx = useContext(AuthContext);
+  //const authCtx = useContext(AuthContext);
   // const [isLogged,setIsLogged]=useState(false);
   // useEffect(()=>{
   //   setIsLogged(authCtx.idToken != null);
   // },[]);
-  const isLogged = authCtx.idToken != null;
+  const isLogged = useSelector((state) => state.auth.isLogged);
   return (
     <div>
       {isLogged && <Header />}

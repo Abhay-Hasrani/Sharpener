@@ -1,11 +1,13 @@
-import { useContext } from "react";
+// import { useContext } from "react";
 import { Button, Form } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
-import AuthContext from "../../store/AuthProvider";
-
+// import AuthContext from "../../store/AuthProvider";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/AuthReducer";
 const SignIn = () => {
-    const navigate = useNavigate();
-    const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   function userSignInFormHandler(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -38,39 +40,41 @@ const SignIn = () => {
     // console.log(data);
     if (res.ok) {
       // localStorage.setItem("userIdToken", data.idToken);
-      authCtx.setIdToken(data.idToken);
-      const formattedEmail = data.email.replace(/[.@]/g,"")
-      localStorage.setItem("email",formattedEmail);
-      navigate('/expenseManager');
+      // authCtx.setIdToken(data.idToken);
+      dispatch(authActions.setIdToken(data.idToken));
+      const formattedEmail = data.email.replace(/[.@]/g, "");
+      localStorage.setItem("email", formattedEmail);
+      navigate("/expenseManager");
     } else {
       alert("Firebase SignIn : " + data.error.message);
     }
   }
   return (
     <div>
-    <Form onSubmit={userSignInFormHandler}>
-      <Form.Group controlId="signInEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control
-          type="email"
-          name="email"
-          placeholder="Enter email"
-          required
-        />
-      </Form.Group>
-      <Form.Group controlId="signInPassword">
-        <Form.Label>Password :</Form.Label>
-        <Form.Control
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          required
-        />
-      </Form.Group>
-      <Button type="submit">Sign In</Button>
-    </Form>
-    <NavLink to="/signUp">New User? Create a Account !!</NavLink><br/>
-    <NavLink to="/forgotPassword">Forgot Password</NavLink>
+      <Form onSubmit={userSignInFormHandler}>
+        <Form.Group controlId="signInEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="signInPassword">
+          <Form.Label>Password :</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            required
+          />
+        </Form.Group>
+        <Button type="submit">Sign In</Button>
+      </Form>
+      <NavLink to="/signUp">New User? Create a Account !!</NavLink>
+      <br />
+      <NavLink to="/forgotPassword">Forgot Password</NavLink>
     </div>
   );
 };

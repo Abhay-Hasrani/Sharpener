@@ -1,17 +1,21 @@
-import { useContext } from "react";
+// import { useContext } from "react";
 import { Button, Form } from "react-bootstrap";
-import ExpenseContext from "../../store/ExpenseProvider";
+import { useDispatch } from "react-redux";
+import { expenseActions } from "../../store/ExpenseReducer";
+// import ExpenseContext from "../../store/ExpenseProvider";
 
 const ExpenseForm = () => {
-  const expenseCtx = useContext(ExpenseContext);
+  // const expenseCtx = useContext(ExpenseContext);
+  const dispatch = useDispatch();
   function expenseFormSubmitHandler(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const expenseObj = {};
     for (const [name, value] of formData.entries()) {
-        expenseObj[name] = value;
+      expenseObj[name] = value;
     }
-    expenseCtx.addExpense(expenseObj);
+    // expenseCtx.addExpense(expenseObj);
+    dispatch(expenseActions.addExpense(expenseObj));
   }
 
   return (
@@ -38,11 +42,11 @@ const ExpenseForm = () => {
       <Form.Group controlId="expenseType">
         <Form.Label>Enter Expense Description :</Form.Label>
         <Form.Control as="select" name="type" required>
-            <option>Others</option>
-            <option>Food</option>
-            <option>Fuel</option>
-            <option>Shopping</option>
-            <option>Bills</option>
+          <option>Others</option>
+          <option>Food</option>
+          <option>Fuel</option>
+          <option>Shopping</option>
+          <option>Bills</option>
         </Form.Control>
       </Form.Group>
       <Button type="submit">Add Expense</Button>
