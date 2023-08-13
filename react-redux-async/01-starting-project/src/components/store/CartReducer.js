@@ -8,20 +8,25 @@ const CartSlice = createSlice({
     addCartItem(state, action) {
       // console.log(action.payload);
       const { id, quantity } = action.payload;
-      const index = state.cartitems.findIndex((item) => item.id === id);
-      state.cartitems.push(action.payload);
-      // if (index === -1) 
-      // else {
-      //   state.cartitems[index] += quantity;
-      //   console.log(state.cartitems[index]);
-      // }
+      const cartitem = state.cartitems.find((item) => item.id === id);
+
+      if (!cartitem) state.cartitems.push(action.payload);
+      else {
+        cartitem.quantity += quantity;
+        cartitem.total += quantity * cartitem.price;
+      }
     },
     updateCartItemQuantity(state, action) {
-      const { id, quantity } = action.payload;
+      const { id, numberOfItems } = action.payload;
       const index = state.cartitems.findIndex((item) => item.id === id);
-      if (index === -1) alert("item not present");
+      const cartitem = state.cartitems[index];
+      if (!cartitem) alert("item not present");
       else {
-        state.cartitems[index] += quantity;
+        cartitem.quantity += numberOfItems;
+        cartitem.total += numberOfItems * cartitem.price;
+        if (cartitem.quantity === 0) {
+          state.cartitems.splice(index, 1);
+        }
       }
     },
     toggleCartVisibility(state) {

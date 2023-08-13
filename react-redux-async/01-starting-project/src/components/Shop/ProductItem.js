@@ -13,6 +13,7 @@ const ProductItem = (props) => {
       price: price,
       description: description,
       quantity: 1,
+      total:price
     };
     // console.log(itemObj);
     dispatch(cartActions.addCartItem(itemObj));
