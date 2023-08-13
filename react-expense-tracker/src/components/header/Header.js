@@ -2,17 +2,21 @@
 import { Button, Nav, Navbar } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 // import AuthContext from "../../store/AuthProvider";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/AuthReducer";
 
 const Header = () => {
   // const authCtx = useContext(AuthContext);
+  const totalExpenseAmount = useSelector((state) => state.expenseReducer.totalExpenseAmount);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   function logoutClickHandler() {
     // authCtx.setIdToken(null);
     dispatch(authActions.setIdToken(null));
     navigate("/");
+  }
+  function premiumClickHandler() {
+    console.log("Premium Clicked");
   }
   return (
     <Navbar>
@@ -27,6 +31,9 @@ const Header = () => {
           <Button variant="danger" onClick={logoutClickHandler}>
             LogOut
           </Button>
+          {totalExpenseAmount>10000 && <Button className="bg-warning" onClick={premiumClickHandler}>
+            Premium
+          </Button>}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

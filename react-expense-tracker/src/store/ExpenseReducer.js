@@ -79,19 +79,21 @@ const ExpenseSlice = createSlice({
   initialState,
   reducers: {
     addExpense(state, action) {
-      const expense = action.payload;
+      let expense = { ...action.payload };
       function addDatabaseIdToExpense(id) {
-        expense.id = id;
+        expense = { ...expense, id: id };
       }
       addExpenseToFirebase(expense, addDatabaseIdToExpense);
+      state.totalExpenseAmount += expense.amount;
       state.expenses.push(expense);
     },
     deleteExpense(state, action) {
-      const id = action.id;
+      const id = action.payload;
       const expenses = state.expenses;
       const index = expenses.findIndex((item) => item.id === id);
       if (index === -1) alert("item not present");
       else {
+        state.totalExpenseAmount -= expenses[index].amount;
         expenses.splice(index, 1);
         deleteExpenseFromFirebase(id);
       }
@@ -103,6 +105,7 @@ const ExpenseSlice = createSlice({
       const index = expenses.findIndex((item) => item.id === id);
       if (index === -1) alert("item not present");
       else {
+        state.totalExpenseAmount += expenses[index].amount - expense.amount;
         expenses[index] = {
           id: id,
           amount: expense.amount,
@@ -114,7 +117,11 @@ const ExpenseSlice = createSlice({
       state.expenses = expenses;
     },
     setExpenses: (state, action) => {
-      state.expenses = action.payload;
+      const expenses = action.payload;
+      for (const { amount } of expenses) {
+        state.totalExpenseAmount += +amount;
+      }
+      state.expenses = expenses;
     },
   },
 });
@@ -129,6 +136,7 @@ export const fetchExpenses = () => async (dispatch) => {
     for (const id in data) {
       // console.log(data[id]);
       const expenseObj = data[id];
+      // console.log(expenseObj);
       expenseObj.id = id;
       expenses.push(expenseObj);
     }
