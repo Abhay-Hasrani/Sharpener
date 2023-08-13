@@ -4,7 +4,7 @@ import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 import { useEffect } from "react";
 import Notification from "./components/UI/Notification";
-import { cartActions } from "./components/store/CartReducer";
+import { cartActions, fetchFromFirebase } from "./components/store/CartReducer";
 import { uiActions } from "./components/store/UiReducer";
 
 let initial = true;
@@ -15,8 +15,13 @@ function App() {
     (state) => state.UI.notificationStatus
   );
   const dispatch = useDispatch();
+
   useEffect(() => {
-    async function fetchFromFirebase() {
+    dispatch(fetchFromFirebase());
+  }, [dispatch]);
+
+  useEffect(() => {
+    async function addDataToFirebase() {
       dispatch(uiActions.setNotificationType("loading"));
       const res = await fetch(
         "https://react-blog-deploy-4f574-default-rtdb.firebaseio.com/cart.json",
@@ -28,7 +33,7 @@ function App() {
       const data = await res.json();
       if (res.ok) {
         dispatch(uiActions.setNotificationType("success"));
-        console.log(data);
+        // console.log(data);
         // dispatch(cartActions.replaceCart(data));
       } else {
         dispatch(uiActions.setNotificationType("error"));
@@ -38,7 +43,7 @@ function App() {
       initial = false;
       return;
     }
-    fetchFromFirebase();
+    addDataToFirebase();
   }, [cart]);
   return (
     <>

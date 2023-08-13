@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { uiActions } from "./UiReducer";
 
 const initialState = { cartitems: [], showCart: false };
 const CartSlice = createSlice({
@@ -37,5 +38,21 @@ const CartSlice = createSlice({
     },
   },
 });
+export const fetchFromFirebase = () => {
+  return async (dispatch) => {
+    dispatch(uiActions.setNotificationType("loading"));
+    const res = await fetch(
+      "https://react-blog-deploy-4f574-default-rtdb.firebaseio.com/cart.json"
+    );
+    const data = await res.json();
+    if (res.ok) {
+      dispatch(uiActions.setNotificationType("success"));
+      // console.log(data);
+      dispatch(cartActions.replaceCart(data));
+    } else {
+      dispatch(uiActions.setNotificationType("error"));
+    }
+  };
+};
 export const cartActions = CartSlice.actions;
 export default CartSlice.reducer;
