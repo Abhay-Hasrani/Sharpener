@@ -4,10 +4,22 @@ import { NavLink, useNavigate } from "react-router-dom";
 // import AuthContext from "../../store/AuthProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/AuthReducer";
+import { themeActions } from "../../store/ThemeReducer";
+import { useEffect, useState } from "react";
+import CSVdownloadButton from "../helpers/CSVdownloadButton";
 
 const Header = () => {
   // const authCtx = useContext(AuthContext);
-  const totalExpenseAmount = useSelector((state) => state.expenseReducer.totalExpenseAmount);
+  const [showDownload, setShowDownload] = useState(false);
+  useEffect(() => setShowDownload(false), []);
+  const totalExpenseAmount = useSelector(
+    (state) => state.expenseReducer.totalExpenseAmount
+  );
+  const showThemeButton = useSelector(
+    (state) => state.themeReducer.showThemeButton
+  );
+  const expenses = useSelector((state) => state.expenseReducer.expenses);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   function logoutClickHandler() {
@@ -16,8 +28,15 @@ const Header = () => {
     navigate("/");
   }
   function premiumClickHandler() {
-    console.log("Premium Clicked");
+    // console.log("Premium Clicked");
+    dispatch(themeActions.toggleThemeButton());
   }
+  function themeClickHandler() {
+    dispatch(themeActions.changeTheme());
+  }
+  // function downloadClickHandler() {
+  //   dispatch(themeActions.changeTheme());
+  // }
   return (
     <Navbar>
       {/* expand="lg" */}
@@ -31,9 +50,19 @@ const Header = () => {
           <Button variant="danger" onClick={logoutClickHandler}>
             LogOut
           </Button>
-          {totalExpenseAmount>10000 && <Button className="bg-warning" onClick={premiumClickHandler}>
-            Premium
-          </Button>}
+          {totalExpenseAmount > 1000 && (
+            <>
+              <Button className="bg-warning" onClick={premiumClickHandler}>
+                Activate Premium
+              </Button>
+              {showThemeButton && (
+                <>
+                  <Button onClick={themeClickHandler}>Theme</Button>
+                  <CSVdownloadButton data={expenses} />
+                </>
+              )}
+            </>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

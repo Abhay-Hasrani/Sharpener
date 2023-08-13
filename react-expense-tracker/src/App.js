@@ -17,8 +17,9 @@ function App() {
   //   setIsLogged(authCtx.idToken != null);
   // },[]);
   const isLogged = useSelector((state) => state.auth.isLogged);
+  const theme = useSelector((state) => state.themeReducer.theme);
   return (
-    <div>
+    <div className={`app ${theme}`}>
       {isLogged && <Header />}
       <Routes>
         <Route path="/" element={<SignIn />} />

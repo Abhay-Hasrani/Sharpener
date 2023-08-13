@@ -138,6 +138,7 @@ export const fetchExpenses = () => async (dispatch) => {
       const expenseObj = data[id];
       // console.log(expenseObj);
       expenseObj.id = id;
+      expenseObj.amount = (+expenseObj.amount);
       expenses.push(expenseObj);
     }
     dispatch(expenseActions.setExpenses(expenses));

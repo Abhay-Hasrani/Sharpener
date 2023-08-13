@@ -44,6 +44,7 @@ const SignIn = () => {
       dispatch(authActions.setIdToken(data.idToken));
       const formattedEmail = data.email.replace(/[.@]/g, "");
       localStorage.setItem("email", formattedEmail);
+      localStorage.setItem("username", data.displayName);
       navigate("/expenseManager");
     } else {
       alert("Firebase SignIn : " + data.error.message);
