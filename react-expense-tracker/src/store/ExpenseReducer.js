@@ -84,7 +84,7 @@ const ExpenseSlice = createSlice({
         expense = { ...expense, id: id };
       }
       addExpenseToFirebase(expense, addDatabaseIdToExpense);
-      state.totalExpenseAmount += expense.amount;
+      state.totalExpenseAmount += +expense.amount;
       state.expenses.push(expense);
     },
     deleteExpense(state, action) {

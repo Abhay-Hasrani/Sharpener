@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Image } from "react-bootstrap";
 import { useSelector } from "react-redux";
 // import AuthContext from "../store/AuthProvider";
 const UpdateProfile = () => {
   // const authContext = useContext(AuthContext);
   // const token = authContext.idToken;
+  const [userImageUrl, setUserImageUrl] = useState(null);
   const token = useSelector((state) => state.auth.idToken);
   const [profileObj, setProfileObj] = useState({
     username: "",
@@ -28,10 +29,12 @@ const UpdateProfile = () => {
       const data = await res.json();
       // console.log(data);
       if (res.ok) {
+        const url = data.users[0].photoUrl;
         setProfileObj({
           username: data.users[0].displayName,
-          photoUrl: data.users[0].photoUrl,
+          photoUrl: url,
         });
+        setUserImageUrl(url);
       } else {
         alert("Firebase Get Profile : " + data.error.message);
       }
@@ -45,6 +48,7 @@ const UpdateProfile = () => {
     for (const [name, value] of formData.entries()) {
       formObj[name] = value;
     }
+    setUserImageUrl(formObj.photoUrl);
     firebaseUpdateProfileHandler(formObj.username, formObj.photoUrl);
   }
 
@@ -112,6 +116,7 @@ const UpdateProfile = () => {
         </Form.Group>
         <Form.Group controlId="signInPassword">
           <Form.Label>Profile Photo URL :</Form.Label>
+          <Image src={userImageUrl} className="h-25 w-25" fluid />
           <Form.Control
             type="url"
             name="photoUrl"
