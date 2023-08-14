@@ -8,7 +8,7 @@ if (obj != null) {
   logInTime = obj.logInTime;
 }
 if (logInTime != null && Date.now() - logInTime > 10 * 60 * 1000) {
-  localStorage.setItem("email", null);
+  // localStorage.setItem("email", null);
   localStorage.setItem(
     "idToken",
     JSON.stringify({

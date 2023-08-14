@@ -1,4 +1,11 @@
+import MailComposer from "./mail/MailComposer";
+
 const Home = () => {
-  return <>Welcome to your mail box</>;
+  return (
+    <div>
+      Welcome to your mail box
+      <MailComposer />
+    </div>
+  );
 };
 export default Home;
