@@ -24,6 +24,10 @@ function App() {
               <Route index element={<AllMails />} />
               <Route path="expandedmail" element={<ExpandedMail />} />
             </Route>
+            <Route path="/sentmails">
+              <Route index element={<AllMails />} />
+              <Route path="expandedmail" element={<ExpandedMail />} />
+            </Route>
           </>
         )}
         <Route path="*" element={<Navigate to="/" />} />

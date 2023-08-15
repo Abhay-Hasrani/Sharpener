@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { formatEmailForPath } from "../components/auth/SignIn";
-const initialState = { userMails: [], unreadMailCount: 0 };
+const initialState = { userMails: [], userSentMails: [], unreadMailCount: 0 };
 const MailSlice = createSlice({
   name: "mailReducer",
   initialState,
@@ -26,6 +26,17 @@ const MailSlice = createSlice({
     },
     updateUnreadCount(state, action) {
       state.unreadMailCount = action.payload;
+    },
+    setUserSentMails(state, action) {
+      state.userSentMails = [...action.payload];
+    },
+    addUserSentMail(state, action) {
+      const emailObj = action.payload;
+      state.userSentMails.push(emailObj);
+    },
+    deleteUserSentMail(state, action) {
+      const id = action.payload;
+      state.userSentMails = state.userSentMails.filter((item) => item.id !== id);
     },
   },
 });
@@ -85,7 +96,7 @@ export const getMailsFromFirebase = () => {
         for (const id in data) {
           if (id === "unreadCount")
             dispatch(mailActions.updateUnreadCount(data[id].unreadCount));
-          else newMails.push({ id: id, ...data[id] });
+          else if(id!=="sent") newMails.push({ id: id, ...data[id] });
         }
       } else {
         throw new Error(data.error);
@@ -95,6 +106,27 @@ export const getMailsFromFirebase = () => {
     }
     // console.log(newMails);
     dispatch(mailActions.setMails(newMails));
+
+    //for sent mails
+
+    const newSentMails = [];
+    try {
+      const res = await fetch(
+        `https://react-blog-deploy-4f574-default-rtdb.firebaseio.com/${formattedEmail}/sent.json`
+      );
+
+      const data = await res.json();
+      if (res.ok) {
+        for (const id in data) {
+          newSentMails.push({ id: id, ...data[id] });
+        }
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert("While getting Sent Mails From Firebase : " + error.message);
+    }
+    dispatch(mailActions.setUserSentMails(newSentMails));
   };
 };
 
@@ -122,6 +154,28 @@ export const sendMailToFirebase = (emailObj) => {
       }
     } catch (error) {
       alert("While adding mail to firebase: " + error.message);
+    }
+    try {
+      const formattedFromEmail = formatEmailForPath(emailObj.emailFrom);
+      const baseUrl = `https://react-blog-deploy-4f574-default-rtdb.firebaseio.com/${formattedFromEmail}/sent.json`;
+      const res = await fetch(baseUrl, {
+        method: "POST",
+        body: JSON.stringify(emailObj),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        console.log(data);
+        emailObj.id = data.name;
+        dispatch(mailActions.addUserSentMail(emailObj));
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert("While adding sent mail to firebase: " + error.message);
     }
   };
 };
@@ -176,8 +230,28 @@ export const deleteMailFromFirebase = (emailObj) => {
     } catch (error) {
       alert("While deleting mail to firebase: " + error.message);
     }
+
+    //for sent mails
+
+    try {
+      const email = localStorage.getItem("email");
+      const formattedEmail = formatEmailForPath(email);
+      const baseUrl = `https://react-blog-deploy-4f574-default-rtdb.firebaseio.com/${formattedEmail}/sent/${emailObj.id}.json`;
+      const res = await fetch(baseUrl, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        console.log(data);
+        dispatch(mailActions.deleteUserSentMail(emailObj));
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert("While deleting sent mail to firebase: " + error.message);
+    }
   };
 };
-
 export const mailActions = MailSlice.actions;
 export default MailSlice.reducer;

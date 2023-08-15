@@ -24,6 +24,7 @@ const Header = () => {
             <NavLink to="/allmails">
               All Mails<span> {unreadMailCount}</span>
             </NavLink>
+            <NavLink to="/sentmails">Sent Mails</NavLink>
             <NavLink to="/mailcomposer">Mail Composer</NavLink>
             <Button variant="danger" onClick={logoutClickHandler}>
               LogOut
