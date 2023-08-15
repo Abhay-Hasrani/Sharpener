@@ -1,4 +1,5 @@
 import { Button, Form } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
 const SignUp = () => {
   function userSignUpFormHandler(e) {
@@ -79,6 +80,7 @@ const SignUp = () => {
         />
       </Form.Group>
       <Button type="submit">Sign Up</Button>
+      <NavLink to="/home">Already a User? Sign In!</NavLink>
     </Form>
   );
 };

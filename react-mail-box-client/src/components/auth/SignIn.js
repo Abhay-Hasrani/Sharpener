@@ -37,8 +37,7 @@ const SignIn = () => {
       const data = await res.json();
       if (res.ok) {
         dispatch(authActions.setIdToken(data.idToken));
-        const formattedEmail = data.email.replace(/[.@]/g, "");
-        localStorage.setItem("email", formattedEmail);
+        localStorage.setItem("email", data.email);
         navigate("/home");
       } else {
         throw new Error(data.error.message);
@@ -48,27 +47,31 @@ const SignIn = () => {
     }
   }
   return (
-      <Form onSubmit={userSignInFormHandler}>
-        <Form.Group controlId="signInEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            name="email"
-            placeholder="Enter email"
-            required
-          />
-        </Form.Group>
-        <Form.Group controlId="signInPassword">
-          <Form.Label>Password :</Form.Label>
-          <Form.Control
-            type="password"
-            name="password"
-            placeholder="Enter Password"
-            required
-          />
-        </Form.Group>
-        <Button type="submit">Sign In</Button>
-      </Form>
+    <Form onSubmit={userSignInFormHandler}>
+      <Form.Group controlId="signInEmail">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control
+          type="email"
+          name="email"
+          placeholder="Enter email"
+          required
+        />
+      </Form.Group>
+      <Form.Group controlId="signInPassword">
+        <Form.Label>Password :</Form.Label>
+        <Form.Control
+          type="password"
+          name="password"
+          placeholder="Enter Password"
+          required
+        />
+      </Form.Group>
+      <Button type="submit">Sign In</Button>
+      <NavLink to="/signup">Dont have account? Create one!</NavLink>
+    </Form>
   );
+};
+export const formatEmailForPath = (email) => {
+  return email.replace(/[.@]/g, "");
 };
 export default SignIn;
