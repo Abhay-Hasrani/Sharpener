@@ -20,6 +20,10 @@ const MailSlice = createSlice({
       );
       state.userMails[index] = emailObj;
     },
+    deleteMail(state, action) {
+      const id = action.payload;
+      state.userMails = state.userMails.filter((item) => item.id !== id);
+    },
     updateUnreadCount(state, action) {
       state.unreadMailCount = action.payload;
     },
@@ -40,7 +44,7 @@ export const updateUnreadCountInFirebase = (
       let prevCount = 0;
       if (unreadRes.ok) {
         if (unreadData != null) prevCount += unreadData.unreadCount;
-      } else throw new Error(data.error);
+      } else throw new Error(unreadData.error);
 
       const newCount = prevCount + addCount;
       if (newCount < 0) return;
@@ -147,6 +151,30 @@ export const updateReadStatusInFirebase = (emailObj, status) => {
       }
     } catch (error) {
       alert("While updating mail to firebase: " + error.message);
+    }
+  };
+};
+
+export const deleteMailFromFirebase = (emailObj) => {
+  return async (dispatch) => {
+    try {
+      const email = localStorage.getItem("email");
+      const formattedEmail = formatEmailForPath(email);
+      const baseUrl = `https://react-blog-deploy-4f574-default-rtdb.firebaseio.com/${formattedEmail}/${emailObj.id}.json`;
+      const res = await fetch(baseUrl, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        console.log(data);
+        if (!emailObj.read) dispatch(updateUnreadCountInFirebase(email, -1));
+        dispatch(mailActions.deleteMail(emailObj));
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert("While deleting mail to firebase: " + error.message);
     }
   };
 };
