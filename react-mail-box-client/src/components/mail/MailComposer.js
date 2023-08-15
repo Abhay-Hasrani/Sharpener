@@ -4,8 +4,10 @@ import "./MailComposer.css";
 import { Button, Form } from "react-bootstrap";
 import { useRef, useState } from "react";
 import { EditorState, convertToRaw } from "draft-js";
-import { formatEmailForPath } from "../auth/SignIn";
+import { useDispatch } from "react-redux";
+import { sendMailToFirebase } from "../../store/MailReducer";
 const MailComposer = () => {
+  const dispatch = useDispatch();
   const [showToolbar, setShowToolbar] = useState();
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
@@ -32,32 +34,10 @@ const MailComposer = () => {
       emailFrom: localStorage.getItem("email"),
       subject: subjectRef.current.value,
       body,
+      read:false
     };
-    console.log(emailObj);
-    addEmailToFirebase(emailObj);
-  }
-
-  async function addEmailToFirebase(emailObj) {
-    try {
-      const formattedToEmail = formatEmailForPath(emailObj.emailTO);
-      const baseUrl = `https://react-blog-deploy-4f574-default-rtdb.firebaseio.com/${formattedToEmail}.json`;
-      const res = await fetch(baseUrl, {
-        method: "POST",
-        body: JSON.stringify(emailObj),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        console.log(data);
-      } else {
-        throw new Error(data.error);
-      }
-    } catch (error) {
-      alert("While adding mail to firebase: " + error.message);
-    }
+    // console.log(emailObj);
+    dispatch(sendMailToFirebase(emailObj));
   }
 
   return (

@@ -6,6 +6,7 @@ import { authActions } from "../../store/AuthReducer";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const unreadMailCount = useSelector((state) => state.mail.unreadMailCount);
   const isLogged = useSelector((state) => state.auth.isLogged);
   function logoutClickHandler() {
     dispatch(authActions.setIdToken(null));
@@ -20,7 +21,9 @@ const Header = () => {
         {isLogged && (
           <Nav className="w-75 flex-wrap justify-content-between">
             <NavLink to="/home">Home</NavLink>
-            <NavLink to="/allmails">All Mails</NavLink>
+            <NavLink to="/allmails">
+              All Mails<span> {unreadMailCount}</span>
+            </NavLink>
             <NavLink to="/mailcomposer">Mail Composer</NavLink>
             <Button variant="danger" onClick={logoutClickHandler}>
               LogOut

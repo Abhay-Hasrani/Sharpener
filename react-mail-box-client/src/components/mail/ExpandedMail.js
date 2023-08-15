@@ -7,7 +7,7 @@ const ExpandedMail = () => {
     // console.log(emailObj);
     return (
         <div>
-            <button onClick={()=>navigate(-1)}>Go Back</button>;
+            <button onClick={()=>navigate(-1)}>Go Back</button>
             <div>From : {emailObj.emailFrom}</div>
             <div>Subject : {emailObj.subject}</div>
             <div>Body : 

@@ -1,45 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {
+  getMailsFromFirebase,
+  updateReadStatusInFirebase,
+} from "../../store/MailReducer";
 
 const AllMails = () => {
-  const [userMails, setUserMails] = useState([]);
-  const navigate = useNavigate();
-  useEffect(() => {
-    async function getMailsFromFirebase() {
-      try {
-        const res = await fetch(
-          `https://react-blog-deploy-4f574-default-rtdb.firebaseio.com/${localStorage.getItem(
-            "email"
-          )}.json`
-        );
+  const userMails = useSelector((state) => state.mail.userMails);
 
-        const data = await res.json();
-        if (res.ok) {
-          setUserMails((prev) => {
-            const newMails = [];
-            for (const emailObj in data) newMails.push(data[emailObj]);
-            return newMails;
-          });
-        } else {
-          throw new Error(data.error);
-        }
-      } catch (error) {
-        alert("FireBaseSignIn : " + error.message);
-      }
-    }
-    getMailsFromFirebase();
-  }, []);
-  //   console.log((userMails));
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getMailsFromFirebase());
+  }, [dispatch]);
   const mailList = userMails.map((item) => {
     return (
       <li
-        key={item.emailFrom+item.subject}
+        key={item.emailFrom + item.subject}
         onClick={() => {
           navigate("expandedmail", { state: { data: item } });
+          if(!item.read)
+          dispatch(updateReadStatusInFirebase({ ...item }, true));
         }}
       >
-        From : {item.emailFrom} <br />
-        Subject : {item.subject}
+        From : {item.emailFrom}
+        {" , "}Subject : {item.subject}
+        {!item.read && <span className="fw-bolder fs-1">·</span>}
       </li>
     );
   });
