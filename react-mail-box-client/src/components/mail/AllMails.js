@@ -12,7 +12,15 @@ const AllMails = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getMailsFromFirebase());
+    const fetch = () => {
+      console.log("fetching...");
+      dispatch(getMailsFromFirebase());
+    };
+    fetch();
+    const intervalId = setInterval(fetch, 5000);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [dispatch]);
   const mails = pathname === "/allmails" ? userMails : userSentMails;
   const mailList = mails.map((item) => {

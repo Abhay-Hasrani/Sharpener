@@ -17,6 +17,7 @@ const MailListItem = (props) => {
   }
   return (
     <li
+      className={props.read ? "" : "bg-primary bg-opacity-50"}
       onClick={() => {
         navigate("expandedmail", { state: { data: props } });
         if (!props.read)
