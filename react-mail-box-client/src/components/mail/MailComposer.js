@@ -34,7 +34,7 @@ const MailComposer = () => {
       emailFrom: localStorage.getItem("email"),
       subject: subjectRef.current.value,
       body,
-      read:false
+      read: false,
     };
     // console.log(emailObj);
     dispatch(sendMailToFirebase(emailObj));
@@ -42,7 +42,7 @@ const MailComposer = () => {
 
   return (
     <div className="mailBody">
-      <Form onSubmit={mailFormSubmitHandler}>
+      <Form className="myform" onSubmit={mailFormSubmitHandler}>
         <Form.Group controlId="userMailEmail">
           <Form.Label>Receivers Email :</Form.Label>
           <Form.Control
@@ -83,7 +83,7 @@ const MailComposer = () => {
             />
           </Form.Control>
         </Form.Group>
-        <Button type="submit">Send</Button>
+        <Button className="btn-form" type="submit">Send</Button>
       </Form>
     </div>
   );

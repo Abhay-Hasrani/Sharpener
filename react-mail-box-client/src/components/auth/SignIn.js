@@ -1,7 +1,8 @@
-import { Button, Form } from "react-bootstrap";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/AuthReducer";
+import "./auth.css";
 const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -47,28 +48,43 @@ const SignIn = () => {
     }
   }
   return (
-    <Form onSubmit={userSignInFormHandler}>
-      <Form.Group controlId="signInEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control
-          type="email"
-          name="email"
-          placeholder="Enter email"
-          required
-        />
-      </Form.Group>
-      <Form.Group controlId="signInPassword">
-        <Form.Label>Password :</Form.Label>
-        <Form.Control
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          required
-        />
-      </Form.Group>
-      <Button type="submit">Sign In</Button>
-      <NavLink to="/signup">Dont have account? Create one!</NavLink>
-    </Form>
+    <div className="form-div">
+      <Form onSubmit={userSignInFormHandler} className="form">
+        <FloatingLabel
+          controlId="signInEmail"
+          label="Email address"
+          className="floatinglabel"
+        >
+          <Form.Control
+            className="control"
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            autoFocus
+            required
+          />
+        </FloatingLabel>
+        <FloatingLabel
+          label="Enter Password"
+          controlId="signInPassword"
+          className="floatinglabel"
+        >
+          <Form.Control
+            className="control"
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            required
+          />
+        </FloatingLabel>
+        <Button type="submit" className="button">
+          Sign In
+        </Button>
+        <NavLink className="navlink" to="/signup">
+          Dont have account? Create one!
+        </NavLink>
+      </Form>
+    </div>
   );
 };
 export const formatEmailForPath = (email) => {

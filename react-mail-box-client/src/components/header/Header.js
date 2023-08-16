@@ -2,7 +2,7 @@ import { Button, Nav, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { authActions } from "../../store/AuthReducer";
-
+import './Header.css';
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -13,20 +13,20 @@ const Header = () => {
     navigate("/");
   }
   return (
-    <Navbar>
+    <Navbar className="navbar">
       {/* expand="lg" */}
-      <Navbar.Brand>Mail Box Client</Navbar.Brand>
+      <Navbar.Brand className="navbrand">Mail Box Client</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="navbar-collapse">
         {isLogged && (
-          <Nav className="w-75 flex-wrap justify-content-between">
+          <Nav className="nav w-100 flex-wrap">
             <NavLink to="/home">Home</NavLink>
             <NavLink to="/allmails">
-              Received<span> {unreadMailCount}</span>
+              Received ({unreadMailCount})
             </NavLink>
             <NavLink to="/sentmails">Sent</NavLink>
             <NavLink to="/mailcomposer">Mail Composer</NavLink>
-            <Button variant="danger" onClick={logoutClickHandler}>
+            <Button className="button" onClick={logoutClickHandler}>
               LogOut
             </Button>
           </Nav>

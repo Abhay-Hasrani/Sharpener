@@ -5,11 +5,12 @@ import {
 } from "../../store/MailReducer";
 import { useDispatch } from "react-redux";
 import { Button } from "react-bootstrap";
+import "./MailListItem.css";
 
 const MailListItem = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const addSentClass = props.showDot?"sent":"";
   function mailDeleteHandler(e) {
     e.stopPropagation();
     dispatch(deleteMailFromFirebase(props));
@@ -17,16 +18,16 @@ const MailListItem = (props) => {
   }
   return (
     <li
-      className={props.read ? "" : "bg-primary bg-opacity-50"}
+      className={props.read ? "listitem read" : "listitem unread"}
       onClick={() => {
         navigate("expandedmail", { state: { data: props } });
         if (!props.read)
           dispatch(updateReadStatusInFirebase({ ...props }, true));
       }}
     >
-      From : {props.emailFrom}
-      {" , "}Subject : {props.subject}
-      {!props.read && <span className="fw-bolder fs-1"> · </span>}
+      <div>From : {props.emailFrom}</div>
+      <div>Subject : {props.subject}</div>
+      {/* {props.showDot && !props.read && <span className="fw-bolder fs-1"> · </span>} */}
       <Button variant="danger" onClick={mailDeleteHandler}>
         Delete
       </Button>

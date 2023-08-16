@@ -1,0 +1,45 @@
+.form-div{
+    display: flex;
+    justify-content: center;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem;
+  padding: 2rem;
+  width: 70%;
+  background: #322b21;
+  border-radius: 5%;
+}
+.form .floatinglabel {
+  width: 60%;
+  margin: 1rem;
+}
+.form .floatinglabel input:focus + label{
+    color: black;
+    font-weight:bold;
+    margin:0 0 1.5rem ;
+}
+.form .floatinglabel .control {
+  border: solid rgb(70, 63, 63) 1px;
+}
+.navlink,.button {
+  margin-top: 10px;
+  color: white;
+}
+.form .button{
+    background: #4f463a;
+    border-color: white;
+}
+.navlink:hover{
+    color: #0d6efd;
+}
+.floatinglabel .control-text{
+    display: none;
+    color: white !important;
+}
+.form .floatinglabel input:focus + .control-text{
+    display: block;
+
+}

@@ -1,8 +1,29 @@
 .editor {
-    margin-top: 10px;
+  margin-top: 10px;
   border: 1px solid rgb(98, 95, 95);
   height: 100px;
 }
 .mailBody {
-  margin: 0 10px;
+  margin: 20px 20px;
+  display: flex;
+  justify-content: center;
+}
+.myform {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+.form-label {
+  font-weight: bolder;
+}
+.myform .form-control {
+  border: solid black 1px;
+}
+.myform .btn-form {
+  background-color: blue;
+  width: 10%;
+  margin: 10px auto;
+}
+.myform .btn-form:hover {
+  background-color: #322b21 !important;
 }

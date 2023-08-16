@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 const AllMails = () => {
   const location = useLocation();
   const pathname = location.pathname;
+  const isShowingReceivedMails = (pathname === "/allmails");
   const userMails = useSelector((state) => state.mail.userMails);
   const userSentMails = useSelector((state) => state.mail.userSentMails);
   const dispatch = useDispatch();
@@ -17,14 +18,14 @@ const AllMails = () => {
       dispatch(getMailsFromFirebase());
     };
     fetch();
-    const intervalId = setInterval(fetch, 5000);
+    const intervalId = setInterval(fetch, 20000);
     return () => {
       clearInterval(intervalId);
     };
   }, [dispatch]);
-  const mails = pathname === "/allmails" ? userMails : userSentMails;
+  const mails = isShowingReceivedMails ? userMails : userSentMails;
   const mailList = mails.map((item) => {
-    return <MailListItem key={item.emailFrom + item.subject} {...item} />;
+    return <MailListItem key={item.emailFrom + item.subject} {...item} showDot={isShowingReceivedMails}/>;
   });
   return <ul>{mailList}</ul>;
 };

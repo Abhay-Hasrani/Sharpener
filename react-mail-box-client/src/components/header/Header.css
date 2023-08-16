@@ -1,0 +1,47 @@
+.navbar {
+  background-color: #322b21;
+}
+.navbrand {
+  justify-content: space-evenly;
+  display: flex;
+  align-items: center;
+  color: white !important;
+  font-weight: bolder;
+  font-size: 25px;
+  height: 60px;
+  margin-left: 10px;
+}
+.navbrand:hover {
+  color: yellow !important;
+}
+.navbar-collapse {
+  justify-content: space-around;
+  align-content: center;
+}
+.nav {
+  align-content: center;
+  align-items: center;
+  justify-content: space-around;
+}
+.nav a {
+  color: white;
+  height: 25px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.nav a.active {
+  color: yellow;
+}
+.nav a:hover {
+    color: blue;
+}
+.nav .button {
+  margin-bottom: 5px;
+  background-color: rgb(137, 60, 60);
+  border-color: red;
+}
+.btn:hover {
+  background-color: rgb(200, 0, 0) !important;
+  border-color: red !important;
+}

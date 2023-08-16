@@ -1,6 +1,6 @@
-import { Button, Form } from "react-bootstrap";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-
+import "./auth.css";
 const SignUp = () => {
   function userSignUpFormHandler(e) {
     e.preventDefault();
@@ -47,41 +47,56 @@ const SignUp = () => {
     }
   }
   return (
-    <Form onSubmit={userSignUpFormHandler}>
-      <Form.Group controlId="signUpEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control
-          type="email"
-          name="email"
-          placeholder="Enter email"
-          required
-        />
-      </Form.Group>
-      <Form.Group controlId="signUpPassword">
-        <Form.Label>Password :</Form.Label>
-        <Form.Control
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          required
-        />
-        <Form.Text className="text-muted">
-          Atleast 6 characters , for strong password one UpperCase (A,B,...) ,
-          one LowerCase (a,b,...) , one specialCharacter (@,$,...)
-        </Form.Text>
-      </Form.Group>
-      <Form.Group controlId="signUpConfirmPassword">
-        <Form.Label>Confirm Password :</Form.Label>
-        <Form.Control
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          required
-        />
-      </Form.Group>
-      <Button type="submit">Sign Up</Button>
-      <NavLink to="/home">Already a User? Sign In!</NavLink>
-    </Form>
+    <div className="form-div">
+      <Form onSubmit={userSignUpFormHandler} className="form">
+        <FloatingLabel
+          controlId="signUpEmail"
+          label="Enter email"
+          className="floatinglabel"
+        >
+          <Form.Control
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            required
+          />
+        </FloatingLabel>
+        <FloatingLabel
+          controlId="signUpPassword"
+          label="Enter Password"
+          className="floatinglabel"
+        >
+          <Form.Control
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            required
+          />
+          <Form.Text className="text-muted control-text">
+            Atleast 6 characters , for strong password one UpperCase (A,B,...) ,
+            one LowerCase (a,b,...) , one specialCharacter (@,$,...)
+          </Form.Text>
+        </FloatingLabel>
+        <FloatingLabel
+          controlId="signUpConfirmPassword"
+          label="Confirm Password"
+          className="floatinglabel"
+        >
+          <Form.Control
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            required
+          />
+        </FloatingLabel>
+        <Button type="submit" className="button">
+          Sign Up
+        </Button>
+        <NavLink to="/home" className="navlink">
+          Already a User? Sign In!
+        </NavLink>
+      </Form>
+    </div>
   );
 };
 export default SignUp;
