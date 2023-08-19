@@ -1,5 +1,6 @@
 import { MongoClient, ObjectId } from "mongodb";
 import MeetupDetails from "../../components/meetups/MeetupDetails";
+import { Head } from "next/head";
 // import { useRouter } from "next/router";
 // const DUMMY_MEETUPS = [
 //   {
@@ -31,7 +32,15 @@ const MeetupDetailsPage = (props) => {
   // const router = useRouter();
   // const meetupid = router.query.meetupid;
   // const meetupObj = DUMMY_MEETUPS.find((item) => item.id === meetupid);
-  return <MeetupDetails {...props.meetupData} />;
+  return (
+    <>
+      <Head>
+        <title>{props.meetupData.title}</title>
+        <meta name="description" content={props.meetupData.description}/>
+      </Head>
+      <MeetupDetails {...props.meetupData} />
+    </>
+  );
 };
 export async function getStaticPaths(context) {
   const client = await MongoClient.connect(
@@ -57,7 +66,9 @@ export async function getStaticProps(context) {
   );
   const database = client.db();
   const meetupCollection = database.collection("meetups");
-  const meetup = await meetupCollection.findOne({ _id:new ObjectId(meetupid) });
+  const meetup = await meetupCollection.findOne({
+    _id: new ObjectId(meetupid),
+  });
   client.close();
   return {
     props: {

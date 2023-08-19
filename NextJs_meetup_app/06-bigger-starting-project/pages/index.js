@@ -1,5 +1,5 @@
 // import { useEffect, useState } from "react";
-
+import { Head } from "next/head";
 import { MongoClient } from "mongodb";
 import MeetupList from "../components/meetups/MeetupList";
 // const DUMMY_MEETUPS = [
@@ -33,7 +33,15 @@ const HomePage = (props) => {
   // }, []);
   // above code is how i used get api call
   // instead directly calling mongo client in getstaticprops is better approach
-  return <MeetupList meetups={props.meetups} />;
+  return (
+    <>
+      <Head>
+        <title>Meetups</title>
+        <meta name="description" content="Add ,organise ,join meetups and much more" />
+      </Head>
+      <MeetupList meetups={props.meetups} />
+    </>
+  );
 };
 export async function getStaticProps() {
   const client = await MongoClient.connect(
@@ -51,10 +59,10 @@ export async function getStaticProps() {
         title: item.title,
         image: item.image,
         address: item.address,
-        description: item.description ,
+        description: item.description,
       })),
     },
-    revalidate : 2
+    revalidate: 2,
   };
 }
 export default HomePage;
