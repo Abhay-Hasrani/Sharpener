@@ -1,5 +1,5 @@
-import Card from '../ui/Card';
-import classes from './MeetupItem.module.css';
+import Card from "../ui/Card";
+import classes from "./MeetupItem.module.css";
 
 function MeetupDetails(props) {
   return (
@@ -11,9 +11,8 @@ function MeetupDetails(props) {
         <div className={classes.content}>
           <h3>{props.title}</h3>
           <address>{props.address}</address>
-          <desc>{props.description}</desc>
+          <div>{props.description}</div>
         </div>
-        
       </Card>
     </li>
   );
