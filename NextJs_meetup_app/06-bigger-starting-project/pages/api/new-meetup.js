@@ -13,11 +13,12 @@ async function handler(req, res) {
     // console.log(result);
     res.status(201).json({ message: " Meetup Inserted! " });
   }
-  if (type === "GET") {
-    const result = await meetupCollection.find().toArray();
-    // console.log(result);
-    res.status(201).json({ message: " Meetups Retrieved! ", meetups: result });
-  }
+//   if (type === "GET") {
+//     const result = await meetupCollection.find().toArray();
+//     // console.log(result);
+//     res.status(201).json({ message: " Meetups Retrieved! ", meetups: result });
+//   }
+// used better approach in home page to get 
   client.close();
 }
 export default handler;
