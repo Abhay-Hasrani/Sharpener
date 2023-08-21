@@ -1,11 +1,7 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
-import Header from "@/components/header/Header";
-import "bootstrap/dist/css/bootstrap.min.css"; 
-import TodoForm from "@/components/todoForm/TodoForm";
-const inter = Inter({ subsets: ["latin"] });
+import Home from "../components/home/Home";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <Head>
@@ -14,8 +10,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header/>
-      <TodoForm/>
+      <Home />
     </>
   );
 }

@@ -1,0 +1,106 @@
+.item-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+  list-style: none;
+  padding: 10px;
+  margin: 0 auto;
+  max-width: 100vh;
+  /* border-left: solid black 1px;
+  border-right: solid black 1px; */
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  /* flex-direction: column;   */
+  padding-top: 10px;
+  background-color: rgb(123, 100, 100, 0.1);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+.list-item:hover {
+  box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px,
+    rgba(45, 35, 66, 0.2) 0 7px 13px -2px, #d6d6e7 0 -2px 0 inset;
+  transform: translateY(-1px);
+}
+
+.item-content {
+  flex-grow: 1;
+}
+
+.item-title {
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+.item-description {
+  border-top: solid black 1px;
+  /* margin: 10px 0; */
+  font-size: 0;
+  color: #555;
+  /* width: 75%; */
+  /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+  opacity: 0;
+  height: 0;
+  max-height: 0;
+  transition: height 0.5s ease-in-out, all 0.4s ease-in-out;
+}
+.active {
+  opacity: 1;
+  height: max-content;
+  max-height: 500px;
+  font-size: 14px;
+}
+.not-active {
+  height: 0;
+  opacity: 0;
+  font-size: 0;
+  max-height: 0;
+}
+
+.item-date {
+  margin-top: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #777;
+}
+
+.item-checkbox {
+  margin: 0 10px;
+}
+.chevron {
+  margin-right: 10px;
+  transition: transform 0.3s ease-out; /* Apply transition to chevron rotation */
+}
+
+.chevron.rotate {
+  transform: rotate(180deg);
+}
+/* .active{
+  animation-name: slideout;
+  animation-duration: 2s;
+  animation-direction: normal;
+  animation-fill-mode: both;
+  animation-timing-function: linear;
+}
+.not-active{
+  animation-name: slideout;
+  animation-duration: 2s;
+  animation-direction: reverse;
+  animation-fill-mode: both;
+  animation-timing-function: linear;
+} */
+
+/* @keyframes slideout {
+  from {
+    height: 0px;
+    display: none;
+  }
+  to {
+    height: fit-content;
+    display: block;
+  }
+} */

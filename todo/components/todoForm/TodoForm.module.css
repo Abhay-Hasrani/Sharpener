@@ -1,19 +1,31 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background-color: rgb(123, 100, 100, 0.1);
+}
+
 /* Input container */
 .input-container {
   position: relative;
-  margin: 20px;
+  margin: 15px;
+  margin-right: 230px;
 }
 
 /* Input field */
 .input-field {
+  background-color: white;
   display: block;
-  width: 100%;
+  width: 200%;
   padding: 10px;
   font-size: 16px;
   border: none;
   border-bottom: 2px solid #ccc;
   outline: none;
-  background-color: transparent;
+  /* background-color: transparent; */
+  margin-right: 50px;
 }
 
 /* Input label */
@@ -43,45 +55,45 @@
   top: -20px;
   font-size: 12px;
   color: #007bff;
+  font-weight: bolder;
 }
 
 .input-field:focus + .input-label + .input-highlight {
-  width: 100%;
+  width: 200%;
 }
 
-.cta {
-  border: none;
-  background: none;
-}
-
-.cta span {
-  padding-bottom: 7px;
-  letter-spacing: 4px;
-  font-size: 14px;
-  padding-right: 15px;
-  text-transform: uppercase;
-}
-
-.hover-underline-animation {
-  position: relative;
+/* ////////////////////////////////// */
+.diagonal-button {
+  padding: 10px 20px;
+  /* background-color: rgb(33, 37, 41, 0.1); */
+  background-color: white;
   color: black;
-  padding-bottom: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+  border: solid 1px black;
+  border-radius: 20%;
 }
 
-.hover-underline-animation:after {
+.diagonal-button::before {
   content: "";
   position: absolute;
+  top: 0;
+  left: -100%;
   width: 100%;
-  transform: scaleX(0);
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #000000;
-  transform-origin: bottom right;
-  transition: transform 0.25s ease-out;
+  height: 100%;
+  background-color: rgb(33, 37, 41);
+  transform: skewX(-30deg);
+  transition: 0.5s;
 }
 
-.cta:hover .hover-underline-animation:after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
+.diagonal-button:hover , .diagonal-button:focus {
+  font-weight: bolder;
+  /* background-color: rgb(203, 197, 197); */
+}
+
+.diagonal-button:hover::before ,.diagonal-button:focus::before {
+  left: 100%;
 }

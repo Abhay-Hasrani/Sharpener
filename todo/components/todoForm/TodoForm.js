@@ -4,8 +4,13 @@ import classes from "./TodoForm.module.css";
 const TodoForm = () => {
   const titleRef = useRef();
   const descriptionRef = useRef();
+  function todoFormSubmitHandler(e){
+    e.preventDefault();
+    console.log(titleRef.current.value, descriptionRef.current.value);
+  }
   return (
-    <form>
+    <form className={classes.form} onSubmit={todoFormSubmitHandler}>
+      <h3>Add a Todo...</h3>
       <TodoFormInput
         type="text"
         placeholder="Enter Todo title"
@@ -18,9 +23,7 @@ const TodoForm = () => {
         label="Description"
         parentRef={descriptionRef}
       />
-      <button className={classes["cta"]}>
-        <span className={classes["hover-underline-animation"]}> Add Todo </span>
-      </button>
+      <button type="submit" className={classes["diagonal-button"]}>Add Todo</button>
     </form>
   );
 };
