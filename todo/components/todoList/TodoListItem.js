@@ -3,6 +3,7 @@ import classes from "./TodoListItem.module.css";
 import EditButton from "../UI/EditButton";
 import DeleteButton from "../UI/DeleteButton";
 const TodoListItem = (props) => {
+  // console.log(props);
   const [showDescription, setShowDescription] = useState(false);
   return (
     <>

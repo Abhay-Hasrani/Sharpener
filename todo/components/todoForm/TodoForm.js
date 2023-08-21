@@ -1,12 +1,22 @@
 import { useRef } from "react";
 import TodoFormInput from "./TodoFormInput";
 import classes from "./TodoForm.module.css";
-const TodoForm = () => {
+import { formatDate } from "../helper";
+const TodoForm = (props) => {
   const titleRef = useRef();
   const descriptionRef = useRef();
-  function todoFormSubmitHandler(e){
+  function todoFormSubmitHandler(e) {
     e.preventDefault();
-    console.log(titleRef.current.value, descriptionRef.current.value);
+    const enteredTitle = titleRef.current.value;
+    const enteredDescription = descriptionRef.current.value;
+    const formattedDate = formatDate();
+    const todoObj = {
+      title: enteredTitle,
+      description: enteredDescription,
+      date: formattedDate,
+      completed: false,
+    };
+    props.onTodoAdd(todoObj);
   }
   return (
     <form className={classes.form} onSubmit={todoFormSubmitHandler}>
@@ -23,7 +33,9 @@ const TodoForm = () => {
         label="Description"
         parentRef={descriptionRef}
       />
-      <button type="submit" className={classes["diagonal-button"]}>Add Todo</button>
+      <button type="submit" className={classes["diagonal-button"]}>
+        Add Todo
+      </button>
     </form>
   );
 };

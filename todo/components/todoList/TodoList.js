@@ -2,7 +2,7 @@ import TodoListItem from "./TodoListItem";
 import classes from "./TodoListItem.module.css";
 const TodoList = (props) => {
   
-  let todoArray = [];
+  let todoArray = props.todoList;
   switch (props.todosType) {
     case "Todos":
       todoArray = props.todoList.filter((item) => item.completed === false);

@@ -5,6 +5,7 @@ const Home = () => {
       to the Todos Manager,<br />
       Add, Edit, Remove Todos and More....
     </div>
+    
   );
 };
 export default Home;
