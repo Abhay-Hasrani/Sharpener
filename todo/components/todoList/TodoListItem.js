@@ -14,6 +14,9 @@ const TodoListItem = (props) => {
     };
     props.onTodoUpdate(newTodoObj);
   }
+  function onTodoDeleteHandler(){
+      props.onTodoDelete(props._id);
+  }
   return (
     <>
       <div
@@ -31,7 +34,7 @@ const TodoListItem = (props) => {
           <p className={classes["item-date"]}>{props.date}</p>
         </div>
         <EditButton {...props} />
-        <DeleteButton />
+        <DeleteButton onDelete={onTodoDeleteHandler}/>
         <span
           className={
             classes["chevron"] + " " + classes[showDescription ? "rotate" : ""]

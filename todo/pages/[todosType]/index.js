@@ -56,6 +56,19 @@ let TodoType = (props) => {
     router.push("/All Todos");
     console.log(data);
   }
+  async function onTodoDeleteHandler(newValueObj) {
+    console.log("here");
+    const res = await fetch("/api/todosapi", {
+      method: "Delete",
+      body: JSON.stringify(newValueObj),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    router.push("/All Todos");
+    console.log(data);
+  }
 
   return (
     <>
@@ -64,6 +77,7 @@ let TodoType = (props) => {
         todoList={todoList}
         todosType={todosType}
         onTodoUpdate={onTodoUpdateHandler}
+        onTodoDelete={onTodoDeleteHandler}
       />
     </>
   );

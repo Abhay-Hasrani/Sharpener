@@ -25,6 +25,13 @@ async function handler(req, res) {
     'Modified count:', ${result.modifiedCount}`,
     });
   }
+  if (type === "DELETE") {
+    // console.log(data);
+    const _id = new ObjectId(data);
+    const filter = { _id };
+    const result = await todoCollection.deleteOne(filter);
+    res.status(201).json({ message: result.deletedCount + " todos Deleted from Database" });
+  }
   client.close();
 }
 export default handler;
