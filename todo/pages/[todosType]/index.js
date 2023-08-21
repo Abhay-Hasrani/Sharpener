@@ -33,7 +33,7 @@ let TodoType = (props) => {
   const todosType = router.query.todosType;
   todoList = props.todosArray;
   async function onTodoAddHandler(todoObj) {
-    const res = await fetch("../api/todosapi", {
+    const res = await fetch("/api/todosapi", {
       method: "POST",
       body: JSON.stringify(todoObj),
       headers: {
@@ -41,13 +41,30 @@ let TodoType = (props) => {
       },
     });
     const data = await res.json();
-    router.push('/All Todos')
+    router.push("/All Todos");
     console.log(data);
   }
+  async function onTodoUpdateHandler(newValueObj) {
+    const res = await fetch("/api/todosapi", {
+      method: "PUT",
+      body: JSON.stringify(newValueObj),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    router.push("/All Todos");
+    console.log(data);
+  }
+
   return (
     <>
       {todosType === "All Todos" && <TodoForm onTodoAdd={onTodoAddHandler} />}
-      <TodoList todoList={todoList} todosType={todosType} />
+      <TodoList
+        todoList={todoList}
+        todosType={todosType}
+        onTodoUpdate={onTodoUpdateHandler}
+      />
     </>
   );
 };
@@ -92,5 +109,6 @@ export async function getStaticProps() {
     props: {
       todosArray,
     },
+    revalidate: 2,
   };
 }

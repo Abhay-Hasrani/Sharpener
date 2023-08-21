@@ -5,6 +5,15 @@ import DeleteButton from "../UI/DeleteButton";
 const TodoListItem = (props) => {
   // console.log(props);
   const [showDescription, setShowDescription] = useState(false);
+  function checkBoxClickHandler(e) {
+    console.log(e.target.checked);
+    const isChecked = e.target.checked;
+    const newTodoObj = {
+      completed: isChecked,
+      _id: props._id,
+    };
+    props.onTodoUpdate(newTodoObj);
+  }
   return (
     <>
       <div
@@ -15,12 +24,13 @@ const TodoListItem = (props) => {
           type="checkbox"
           className={classes["item-checkbox"]}
           defaultChecked={props.completed}
+          onClick={checkBoxClickHandler}
         />
         <div className={classes["item-content"]}>
           <h3 className={classes["item-title"]}>{props.title}</h3>
           <p className={classes["item-date"]}>{props.date}</p>
         </div>
-        <EditButton {...props}/>
+        <EditButton {...props} />
         <DeleteButton />
         <span
           className={

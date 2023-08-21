@@ -6,7 +6,17 @@ const EditButton = (props) => {
   const titleRef = useRef();
   const descriptionRef = useRef();
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleSave = () => {
+    const enteredTitle = titleRef.current.value;
+    const enteredDescription = descriptionRef.current.value;
+    const newValuesObj = {
+      completed: enteredDescription,
+      title: enteredTitle,
+      _id: props._id,
+    };
+    props.onTodoUpdate(newValuesObj);
+    setShow(false);
+  };
   return (
     <>
       <button
@@ -50,7 +60,7 @@ const EditButton = (props) => {
           <Button variant="danger" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="success" onClick={handleClose}>
+          <Button variant="success" onClick={handleSave}>
             Save Changes
           </Button>
         </Modal.Footer>

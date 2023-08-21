@@ -14,7 +14,7 @@ const TodoList = (props) => {
       todoArray = props.todoList;
   }
   const todoList = todoArray.map((item, index) => (
-    <TodoListItem key={index} {...item} />
+    <TodoListItem onTodoUpdate = {props.onTodoUpdate} key={index} {...item} />
   ));
   return <ul className={classes["item-list"]}>{todoList}</ul>;
 };
